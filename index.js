@@ -5,8 +5,11 @@ const cors = require ('cors')
 const logger = require('./loggerMiddlewhare')
 
 const Note = require('./models/Note')
+//const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
+const usersRouter = require('./controllers/users')
+const User = require('./models/user')
 
 app.use(cors())
 app.use(express.json())
@@ -14,6 +17,7 @@ app.use(express.json())
 app.use(logger) 
 
 let notes = []
+let hijos = []
 //const app = http.createServer((request, response) => {
 //    response.writeHead(200, {'Content-Type': 'application/json'})
 //    response.end(JSON.stringify(notes))
@@ -33,7 +37,8 @@ app.get('/api/notes', (request, response) =>{
 app.get('/api/notes/:id', (request, response, next) =>{
     const { id } = request.params
     
-    Note.findById(id).then(note => {
+    Note.findById(id)
+    .then(note => {
         if (note){
             return response.json(note)
         } else {
@@ -47,30 +52,48 @@ app.get('/api/notes/:id', (request, response, next) =>{
 
 app.delete('/api/notes/:id', (request, response, next) =>{
     const { id } = request.params
-    Note.findByIdAndRemove(id).then(result => {
+    Note.findByIdAndDelete(id).then(() => {
         response.status(204).end()
     }).catch(error => next(error))
+    response.status(204).end()
 })
 
-app.post('/api/notes', (request, response) =>{
-    const note  = request.body
+app.post('/api/notes', async (request, response, next) =>{
+
+    const {
+        content,
+        important = false,
+        userId
+    }  = request.body
     
-    if (!note.content){
+    const user = await User.findById(userId)
+    
+    if (!content){
         return response.status(400).json({
             error:'note.content is missing'
         })
     }
 
     const newNote = new Note({
-        content: note.content,
+        content,
         date: new Date(),
-        important: note.important || false
+        important,
+        user: user.toJSON().id
     })
-    newNote.save().then(savedNote => {
-        response.json(savedNote)
-    })
+    //newNote.save().then(savedNote => {
+    //    response.json(savedNote)
+    //})
     //notes = [...notes, newNote]
-    response.status(201).json(newNote)
+    try {
+        const savedNote = await newNote.save()
+
+        user.notes = user.notes.concat(savedNote._id)
+        await user.save()
+        response.json(savedNote)
+    } catch (error) {
+        next(error)
+    }
+    
 })
 
 app.put('/api/notes/:id', (request, response, next) =>{
@@ -87,6 +110,11 @@ app.put('/api/notes/:id', (request, response, next) =>{
             response.json(result)
         }).catch(error => next(error))
 })
+//-------------------------MI APP------------------------------------
+
+app.use('/api/users', usersRouter)
+
+//app.use('api/users', hijosRouter)
 
 app.use(notFound)
 app.use(handleErrors) 

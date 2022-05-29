@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/hijos
+content-type: application/json
+
+{
+    "content": "contenido Nota POST 2 ",
+    "important": true
+}

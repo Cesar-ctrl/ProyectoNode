@@ -1,7 +1,7 @@
 require('dotenv').config()
 const {model, Schema} = require('mongoose')
 
-const noteSchema = new Schema ({
+const hijoSchema = new Schema ({
     content: String,
     date: Date,
     important: Boolean,
@@ -11,7 +11,7 @@ const noteSchema = new Schema ({
     }
 })
 
-noteSchema.set('toJSON', {
+hijoSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id
         delete returnedObject._id
@@ -19,19 +19,19 @@ noteSchema.set('toJSON', {
     }
 })
 
-const Note = model('Note', noteSchema)
+const Hijo = model('Hijo', hijoSchema)
 
-//Note.find({}).then(result => {
+//Hijo.find({}).then(result => {
 //    console.log(result)
 //    mongoose.connection.close()
 //})
-//const note = new Note({
+//const hijo = new Hijo({
 //    content: 'mongodb probando Schema',
 //    date: new Date(),
 //    important: true
 //})
 //
-//note.save()
+//Hijo.save()
 //    .then (result => {
 //        console.log(result)
 //        mongoose.connection.close()
@@ -39,4 +39,4 @@ const Note = model('Note', noteSchema)
 //        console.error(err)
 //    })
 
-module.exports = Note
+module.exports = Hijo
