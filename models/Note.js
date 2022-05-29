@@ -1,5 +1,5 @@
 require('dotenv').config()
-require('./mongo')
+const {model, Schema} = require('mongoose')
 
 const noteSchema = new Schema ({
     content: String,
