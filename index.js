@@ -5,6 +5,8 @@ const cors = require ('cors')
 const logger = require('./loggerMiddlewhare')
 
 const Note = require('./models/Note')
+const notFound = require('./middleware/notFound')
+const handleErrors = require('./middleware/handleErrors')
 
 app.use(cors())
 app.use(express.json())
@@ -86,20 +88,8 @@ app.put('/api/notes/:id', (request, response, next) =>{
         }).catch(error => next(error))
 })
 
-app.use((error, request, response, next)=> {
-    response.status(404).end()
-})
-
-app.use((error, request, response, next)=> {
-    console.error(error)
-
-    if (error.name === 'CastError'){
-        response.status(400).send({ error: 'is used is malformed' })
-    } else {
-        response.status(500)
-    }
- 
-}) 
+app.use(notFound)
+app.use(handleErrors) 
 
 
 
