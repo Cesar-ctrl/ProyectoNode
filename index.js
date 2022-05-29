@@ -78,7 +78,9 @@ app.post('/api/notes', async (request, response, next) =>{
     let decodedToken = {}
     try{
         decodedToken = jwt.verify(token, process.env.SECRET)
-    } catch {}
+    } catch (e){
+        console.log(e)
+    }
 
     if (!token || !decodedToken.id){
         return response.status(401).json({ error: 'token missing or invalid' })
