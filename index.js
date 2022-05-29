@@ -4,6 +4,7 @@ const app = express()
 const cors = require ('cors')
 const logger = require('./loggerMiddlewhare')
 
+const jwt = require('jsonwebtoken')
 const User = require('./models/User')
 const Note = require('./models/Note')
 //const Hijo = require('./models/Hijo')
@@ -68,6 +69,21 @@ app.post('/api/notes', async (request, response, next) =>{
         userId
     }  = request.body
     
+    const authorization = request.get('authorization')
+    let token = ''
+    if (authorization && authorization.toLowerCase().startsWith('baerer')){
+        token = authorization.substring(7)
+    }
+
+    let decodedToken = {}
+    try{
+        decodedToken = jwt.verify(token, process.env.SECRET)
+    } catch {}
+
+    if (!token || !decodedToken.id){
+        return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
     const user = await User.findById(userId)
     
     if (!content){
