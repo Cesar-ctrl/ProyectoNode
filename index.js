@@ -1,33 +1,18 @@
+require('./mongo')
+
 const express = require ('express')
 const cors = require ('cors')
 const app = express()
 const logger = require('./loggerMiddlewhare')
+
+const Note = require('./models/Note')
 
 app.use(cors())
 app.use(express.json())
 
 app.use(logger) 
 
-let notes = [
-    {
-        "id":1,
-        "content":"contenido1 important true",
-        "date":"2022-05-21",
-        "important":true
-    },
-    {
-        "id":2,
-        "content":"contenido2 important false",
-        "date":"2022-05-21",
-        "important":false
-    },
-    {
-        "id":3,
-        "content":"contenido3 important true",
-        "date":"2022-05-21",
-        "important":true
-    }
-]
+let notes = []
 //const app = http.createServer((request, response) => {
 //    response.writeHead(200, {'Content-Type': 'application/json'})
 //    response.end(JSON.stringify(notes))
@@ -39,7 +24,9 @@ app.get('/', (request, response) =>{
 })
 
 app.get('/api/notes', (request, response) =>{
-    response.json(notes)
+    Note.find({}).then(notes => {
+        response.json(notes)
+    })
 })
 
 app.get('/api/notes/:id', (request, response) =>{
@@ -87,7 +74,7 @@ app.use((request, response)=> {
     })
 }) 
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () =>{
     console.log(`Server running on port ${PORT}`)
 })
