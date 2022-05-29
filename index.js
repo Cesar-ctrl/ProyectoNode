@@ -4,12 +4,14 @@ const app = express()
 const cors = require ('cors')
 const logger = require('./loggerMiddlewhare')
 
+const User = require('./models/User')
 const Note = require('./models/Note')
 //const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 const usersRouter = require('./controllers/users')
-const User = require('./models/user')
+const loginRouter = require('./controllers/login')
+
 
 app.use(cors())
 app.use(express.json())
@@ -113,7 +115,7 @@ app.put('/api/notes/:id', (request, response, next) =>{
 //-------------------------MI APP------------------------------------
 
 app.use('/api/users', usersRouter)
-
+app.use('/api/login', loginRouter)
 //app.use('api/users', hijosRouter)
 
 app.use(notFound)
