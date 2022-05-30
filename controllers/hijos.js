@@ -1,26 +1,40 @@
 const bcrypt = require('bcrypt')
 const hijosRouter = require('express').Router()
 const Hijo = require('../models/hijo')
+const User = require('../models/User')
+const userExtractor = require('../middleware/userExtractor')
 
-
-
-hijosRouter.get('/', async (request, response) =>{
+hijosRouter.get('/', userExtractor, async (request, response) =>{
     const hijos = await Hijo.find({})
     response.json(hijos)
 })
 
-hijosRouter.post('/', async(request, response) => {
-    const { body } = request
-    const { username, name, surnames, password } = body
+hijosRouter.post('/', userExtractor, async(request, response, next) => {
+    const { name, surnames, edad, DNI, alergenos, necesidadesesp } = request.body
+    const { userId } = request
+    const user = await User.findById(userId)
 
-    const hijo = new Hijo ({
+    const newHijo = new Hijo ({
         name,
-        surnames
+        surnames,
+        edad,
+        DNI,
+        alergenos,
+        necesidadesesp,
+        user: user._id
     })
     
-    const savedHijo = await hijo.save() 
+    try {
+        const savedHijo = await newHijo.save()
     
-    response.json(savedHijo)
+        user.hijos = user.hijos.concat(savedHijo._id)
+        await user.save()
+    
+        response.json(savedHijo)
+      } catch (error) {
+        console.log(error)
+        next(error)
+      }
 })
 
 module.exports = hijosRouter

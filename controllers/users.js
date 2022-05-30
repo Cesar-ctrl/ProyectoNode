@@ -12,7 +12,7 @@ usersRouter.get('/', async (request, response) =>{
 
 usersRouter.post('/', async(request, response) => {
     const { body } = request
-    const { username, name, surnames, password } = body
+    const { username, name, surnames, DNI, phone, email, password } = body
 
     const saltRounds = 10 
     const passwordHash = await bcrypt.hash(password, saltRounds)
@@ -21,6 +21,9 @@ usersRouter.post('/', async(request, response) => {
         username,
         name,
         surnames,
+        DNI,
+        phone,
+        email,
         passwordHash
     })
     

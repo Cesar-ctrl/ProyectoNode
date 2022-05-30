@@ -1,0 +1,1 @@
+DELETE http://localhost:3001/api/guards/6293440f16d3447a10b950e2

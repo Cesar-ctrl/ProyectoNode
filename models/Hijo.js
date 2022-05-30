@@ -2,9 +2,12 @@ require('dotenv').config()
 const {model, Schema} = require('mongoose')
 
 const hijoSchema = new Schema ({
-    content: String,
-    date: Date,
-    important: Boolean,
+    name: String,
+    surnames: String,
+    edad: String,
+    DNI: String,
+    alergenos: String,
+    necesidadesesp:String,
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -21,22 +24,5 @@ hijoSchema.set('toJSON', {
 
 const Hijo = model('Hijo', hijoSchema)
 
-//Hijo.find({}).then(result => {
-//    console.log(result)
-//    mongoose.connection.close()
-//})
-//const hijo = new Hijo({
-//    content: 'mongodb probando Schema',
-//    date: new Date(),
-//    important: true
-//})
-//
-//Hijo.save()
-//    .then (result => {
-//        console.log(result)
-//        mongoose.connection.close()
-//    }).catch(err => {
-//        console.error(err)
-//    })
 
 module.exports = Hijo

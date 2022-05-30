@@ -1,7 +1,13 @@
 POST http://localhost:3001/api/hijos
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTM3MWI2OTJhZjlkMDI2MWFiYWY4MyIsInVzZXJuYW1lIjoiVXNlcm5hbWUyIiwiaWF0IjoxNjUzOTIyNjA2LCJleHAiOjE2NTQ1Mjc0MDZ9.o6T1lCPkshoH7o3x9b5cfuIcsOvyBDgbFTxGvPXyAaA
 
 {
-    "content": "contenido Nota POST 2 ",
-    "important": true
+    "name": "hijo1",
+    "surnames": "surnames",
+    "edad": "2",
+    "DNI": "12345678N",
+    "alergenos": "",
+    "necesidadesesp": "",
+    "user": "6294d626ca0b29dd4c552837"
 }

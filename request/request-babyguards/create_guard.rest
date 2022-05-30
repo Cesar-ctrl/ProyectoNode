@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/babyguards
+content-type: application/json
+
+{
+    "name": "Name3",
+    "surnames": "surnames3",
+    "DNI": "dni3",
+    "email": "email3",
+    "dias": "dias3",
+    "horario": "horario3",
+    "disponible": true,
+    "password" : "12345678"
+}

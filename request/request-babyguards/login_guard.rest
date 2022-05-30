@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/guards
+content-type: application/json
+
+{
+    "username": "Username2",
+    "password" : "password2"
+}

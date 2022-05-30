@@ -1,24 +1,17 @@
 const { Schema, model } = require('mongoose')
 
-const userSchema = new Schema({
-    username: String,
+const babyguardSchema = new Schema({
     name: String,
     surnames: String,
     DNI: String,
-    phone: String,
     email: String,
-    passwordHash:String,
-    hijos: [{
-        type: Schema.Types.ObjectId,
-        ref:'Hijo'
-    }],
-    notes: [{
-        type: Schema.Types.ObjectId,
-        ref:'Note'
-    }]
+    dias: String,
+    horario: String,
+    disponible : Boolean,
+    passwordHash:String
 })
 
-userSchema.set('toJSON', {
+babyguardSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id
         delete returnedObject._id
@@ -27,6 +20,6 @@ userSchema.set('toJSON', {
         delete returnedObject.passwordHash
     }
 })
-const User = model('User', userSchema)
+const Babyguard = model('Babyguard', babyguardSchema)
  
-module.exports = User
+module.exports = Babyguard

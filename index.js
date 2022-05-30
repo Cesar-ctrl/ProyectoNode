@@ -1,20 +1,24 @@
 require('dotenv').config()
 require('./mongo')
+
+const Sentry = require('@sentry/node')
+const Tracing = require('@sentry/tracing')
 const express = require ('express')
 const app = express()
 const cors = require ('cors')
 const logger = require('./loggerMiddlewhare')
 
-const jwt = require('jsonwebtoken')
 const User = require('./models/User')
 const Note = require('./models/Note')
 //const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 const userExtractor = require('./middleware/userExtractor')
+
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
-
+const hijosRouter = require('./controllers/hijos')
+const babyguardsRouter = require('./controllers/babyguards')
 
 app.use(cors())
 app.use(express.json())
@@ -23,10 +27,33 @@ app.use(logger)
 
 let notes = []
 let hijos = []
-//const app = http.createServer((request, response) => {
-//    response.writeHead(200, {'Content-Type': 'application/json'})
-//    response.end(JSON.stringify(notes))
-//})
+
+
+Sentry.init({
+  dsn: 'https://ac034ebd99274911a8234148642e044c@o537348.ingest.sentry.io/5655435',
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Tracing.Integrations.Express({ app })
+  ],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0
+})
+
+
+app.use(Sentry.Handlers.requestHandler())
+
+app.use(Sentry.Handlers.tracingHandler())
+
+app.get('/', (request, response) => {
+  console.log(request.ip)
+  console.log(request.ips)
+  console.log(request.originalUrl)
+  response.send('<h1>Hello World!</h1>')
+})
 
 
 app.get('/', (request, response) =>{
@@ -125,15 +152,17 @@ app.put('/api/notes/:id', userExtractor, (request, response, next) => {
 
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
-//app.use('api/users', hijosRouter)
+app.use('/api/hijos', hijosRouter)
+app.use('/api/babyguards', babyguardsRouter)
 
 app.use(notFound)
+app.use(Sentry.Handlers.errorHandler())
 app.use(handleErrors) 
 
 
 
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () =>{
     console.log(`Server running on port ${PORT}`)
 })
