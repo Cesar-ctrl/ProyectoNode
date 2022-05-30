@@ -1,3 +1,4 @@
+require('dotenv').config()
 require('./mongo')
 const express = require ('express')
 const app = express()
@@ -10,6 +11,7 @@ const Note = require('./models/Note')
 //const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
+const userExtractor = require('./middleware/userExtractor')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 
@@ -53,83 +55,72 @@ app.get('/api/notes/:id', (request, response, next) =>{
     
 })
 
-app.delete('/api/notes/:id', (request, response, next) =>{
+app.delete('/api/notes/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params
-    Note.findByIdAndDelete(id).then(() => {
-        response.status(204).end()
-    }).catch(error => next(error))
+    // const note = await Note.findById(id)
+    // if (!note) return response.sendStatus(404)
+  
+    const res = await Note.findByIdAndDelete(id)
+    if (res === null) return response.sendStatus(404)
+  
     response.status(204).end()
 })
 
-app.post('/api/notes', async (request, response, next) =>{
-
+app.post('/api/notes', userExtractor, async (request, response, next) => {
     const {
-        content,
-        important = false,
-        userId
-    }  = request.body
-    
-    const authorization = request.get('authorization')
-    let token = ''
-    if (authorization && authorization.toLowerCase().startsWith('baerer')){
-        token = authorization.substring(7)
-    }
-
-    let decodedToken = {}
-    try{
-        decodedToken = jwt.verify(token, process.env.SECRET)
-    } catch (e){
-        console.log(e)
-    }
-
-    if (!token || !decodedToken.id){
-        return response.status(401).json({ error: 'token missing or invalid' })
-    }
-
+      content,
+      important = false
+    } = request.body
+  
+    // sacar userId de request
+    const { userId } = request
+  
     const user = await User.findById(userId)
-    
-    if (!content){
-        return response.status(400).json({
-            error:'note.content is missing'
-        })
+  
+    if (!content) {
+      return response.status(400).json({
+        error: 'required "content" field is missing'
+      })
     }
-
+  
     const newNote = new Note({
-        content,
-        date: new Date(),
-        important,
-        user: user.toJSON().id
+      content,
+      date: new Date(),
+      important,
+      user: user._id
     })
-    //newNote.save().then(savedNote => {
-    //    response.json(savedNote)
-    //})
-    //notes = [...notes, newNote]
+  
+    // newNote.save().then(savedNote => {
+    //   response.json(savedNote)
+    // }).catch(err => next(err))
+  
     try {
-        const savedNote = await newNote.save()
-
-        user.notes = user.notes.concat(savedNote._id)
-        await user.save()
-        response.json(savedNote)
+      const savedNote = await newNote.save()
+  
+      user.notes = user.notes.concat(savedNote._id)
+      await user.save()
+  
+      response.json(savedNote)
     } catch (error) {
-        next(error)
+      next(error)
     }
-    
 })
 
-app.put('/api/notes/:id', (request, response, next) =>{
+app.put('/api/notes/:id', userExtractor, (request, response, next) => {
     const { id } = request.params
     const note = request.body
-
+  
     const newNoteInfo = {
-        content: note.content,
-        important: note.important
+      content: note.content,
+      important: note.important
     }
-
-    Note.findByIdAndUpdate(id, newNoteInfo, {new:true})
-        .then(result => {
-            response.json(result)
-        }).catch(error => next(error))
-})
+  
+    Note.findByIdAndUpdate(id, newNoteInfo, { new: true })
+      .then(result => {
+        response.json(result)
+      })
+      .catch(next)
+  })
 //-------------------------MI APP------------------------------------
 
 app.use('/api/users', usersRouter)
