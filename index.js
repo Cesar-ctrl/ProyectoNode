@@ -17,6 +17,7 @@ const userExtractor = require('./middleware/userExtractor')
 
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const loginguardRouter = require('./controllers/login')
 const hijosRouter = require('./controllers/hijos')
 const babyguardsRouter = require('./controllers/babyguards')
 
@@ -153,6 +154,7 @@ app.put('/api/notes/:id', userExtractor, (request, response, next) => {
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/hijos', hijosRouter)
+app.use('/api/loginguards', loginguardRouter)
 app.use('/api/babyguards', babyguardsRouter)
 
 app.use(notFound)

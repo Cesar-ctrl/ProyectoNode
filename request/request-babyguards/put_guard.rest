@@ -1,4 +1,4 @@
-PUT http://localhost:3001/api/guards/62935c8039f4ebfc98905de9
+PUT http://localhost:3001/api/babyguards/62935c8039f4ebfc98905de9
 content-type: application/json
 
 {

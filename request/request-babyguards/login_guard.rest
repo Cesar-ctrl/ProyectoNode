@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/guards
+POST http://localhost:3001/api/loginguards
 content-type: application/json
 
 {
-    "username": "Username2",
-    "password" : "password2"
+    "email": "email3",
+    "password" : "12345678"
 }
