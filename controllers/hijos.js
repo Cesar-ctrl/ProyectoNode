@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const hijosRouter = require('express').Router()
-const Hijo = require('../models/hijo')
+const Hijo = require('../models/Hijo')
 const User = require('../models/User')
 const userExtractor = require('../middleware/userExtractor')
 
