@@ -58,7 +58,9 @@ app.get('/', (request, response) => {
 
 
 app.get('/', (request, response) =>{
-    response.send('<h1>Hello World</h1>')
+    Note.find({}).then(notes => {
+      response.json(notes)
+  })
 })
 
 app.get('/api/notes', (request, response) =>{
