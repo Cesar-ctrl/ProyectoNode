@@ -53,7 +53,9 @@ app.get('/', (request, response) => {
   console.log(request.ip)
   console.log(request.ips)
   console.log(request.originalUrl)
-  response.send('<h1>Hello World!</h1>')
+  Note.find({}).then(notes => {
+      response.json(notes)
+  })
 })
 
 
