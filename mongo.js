@@ -1,7 +1,8 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
 
-//const connectionString = process.env.MONGO_DB_URI
-const connectionString = 'mongodb+srv://amadocesar:zrO7cU3A8txfjUVW@cluster0.tpmtr.mongodb.net/midb?retryWrites=true&w=majority'
+//const connectionString = 
+const connectionString = process.env.MONGO_DB_URI
 // consexion con mongodb
 mongoose.connect(connectionString, {
     useNewUrlParser: true,
