@@ -6,10 +6,11 @@ const Tracing = require('@sentry/tracing')
 const express = require ('express')
 const app = express()
 const cors = require ('cors')
-const logger = require('./loggerMiddlewhare')
-
 const User = require('./models/User')
 const Note = require('./models/Note')
+
+const logger = require('./loggerMiddlewhare')
+
 //const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
@@ -17,7 +18,7 @@ const userExtractor = require('./middleware/userExtractor')
 
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
-const loginguardRouter = require('./controllers/login')
+const loginguardRouter = require('./controllers/loginguard')
 const hijosRouter = require('./controllers/hijos')
 const babyguardsRouter = require('./controllers/babyguards')
 
@@ -53,9 +54,7 @@ app.get('/', (request, response) => {
   console.log(request.ip)
   console.log(request.ips)
   console.log(request.originalUrl)
-  Note.find({}).then(notes => {
-      response.json(notes)
-  })
+  response.send('<h1>Hello World!</h1>')
 })
 
 
@@ -65,10 +64,12 @@ app.get('/', (request, response) =>{
   })
 })
 
-app.get('/api/notes', (request, response) =>{
-    Note.find({}).then(notes => {
-        response.json(notes)
-    })
+app.get('/api/notes', async (request, response) =>{
+  const notes = await Note.find({}).populate('user', {
+    username: 1,
+    name: 1
+  })
+  response.json(notes)
 })
 
 app.get('/api/notes/:id', (request, response, next) =>{
@@ -169,6 +170,8 @@ app.use(handleErrors)
 
 
 const PORT = process.env.PORT || 3001
-app.listen(PORT, () =>{
-    console.log(`Server running on port ${PORT}`)
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
 })
+
+module.exports = { app, server }
