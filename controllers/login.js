@@ -28,12 +28,12 @@ loginRouter.post('/', async (request, response) =>{
 
     const token = jwt.sign(
         userForToken,
-        process.env.SECRET,
+        'LoremipsumdolorsitametconsecteturadipiscingelitNuncnonporttitorligulaUtcommodomaurisnomagnaegestavolutpatmieuismodgracias',
         {
           expiresIn: 60 * 60 * 24 * 7
         }
       )
-      
+    //console.log()
     response.send({
         name: user.name,
         email: user.email,
