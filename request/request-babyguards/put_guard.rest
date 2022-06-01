@@ -1,9 +1,6 @@
-PUT http://localhost:3001/api/babyguards/62935c8039f4ebfc98905de9
+PUT http://localhost:3001/api/babyguards/6294f01238d3e2b5f85cb448
 content-type: application/json
 
 {
-    "username": "otro Username",
-    "name": "Otro Name",
-    "surnames": "otro Surname",
-    "password" : "Otra contraseña"
+    "disponible": false
 }

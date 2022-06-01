@@ -30,4 +30,19 @@ babyguardsRouter.post('/', async(request, response) => {
     response.json(savedBabyguard)
 })
 
+babyguardsRouter.put('/:id', async (request, response, next) => {
+    const { id } = request.params
+    const guard = request.body
+    
+    const newGuardInfo = {
+      disponible: guard.disponible
+    }
+    
+    Babyguard.findByIdAndUpdate(id, newGuardInfo, { new: true })
+      .then(result => {
+        response.json(result)
+      })
+      .catch(next)
+  })
+
 module.exports = babyguardsRouter
