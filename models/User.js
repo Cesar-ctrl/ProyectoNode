@@ -12,6 +12,10 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Hijo'
     }],
+    guards: [{
+        type: Schema.Types.ObjectId,
+        ref:'Babyguard'
+    }],
     notes: [{
         type: Schema.Types.ObjectId,
         ref:'Note'

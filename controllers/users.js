@@ -32,4 +32,19 @@ usersRouter.post('/', async(request, response) => {
     response.status(201).json(savedUser)
 })
 
+usersRouter.put('/fav/:id', async (request, response, next) => {
+    const { id } = request.params
+    const user = request.body
+    
+    const newGuardInfo = {
+        guards: user.guards
+    }
+    
+    User.findByIdAndUpdate(id, newGuardInfo, { new: true })
+      .then(result => {
+        response.json(result)
+      })
+      .catch(next)
+  })
+
 module.exports = usersRouter

@@ -7,6 +7,19 @@ babyguardsRouter.get('/', async (request, response) =>{
     response.json(babyguards)
 })
 
+babyguardsRouter.get('/fav', async (request, response) =>{
+  const guard = request.body
+
+  for (let index = 0; index < guard.guards.length; index++) {
+    
+    const newGuardInfo = {
+      _id: guard.guards[index]
+    }
+    const babyguards = await Babyguard.find({newGuardInfo})
+    response.json(babyguards)
+  }
+})
+
 babyguardsRouter.post('/', async(request, response) => {
     const { body } = request
     const { name, surnames, DNI, email, dias, horario, disponible, password } = body

@@ -1,1 +1,1 @@
-GET https://damp-temple-29994.herokuapp.com/api/users
+GET http://localhost:3001/api/users

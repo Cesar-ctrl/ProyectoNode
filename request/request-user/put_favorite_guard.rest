@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/users/fav/6294f48a5fd13bb9d9665565
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDE3OTI2MSwiZXhwIjoxNjU0Nzg0MDYxfQ.OLN1fxGM5sXjt49jKYU3f3I84ZRMTkWRdRdmNWnQPnQ
+
+{
+    "guards":"6294f01238d3e2b5f85cb448"
+}
