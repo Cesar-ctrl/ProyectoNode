@@ -10,6 +10,22 @@ usersRouter.get('/', async (request, response) =>{
     response.json(users)
 })
 
+usersRouter.get('/:id', async (request, response) =>{
+    const { id } = request.params
+    const user = request.body
+    User.findById(id)
+    .then(user => {
+        if (user){
+            return response.json(user)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => {
+        next(err)   
+    })
+    response.json(users)
+})
+
 usersRouter.post('/', async(request, response) => {
     const { body } = request
     const { username, name, surnames, DNI, phone, email, password } = body
@@ -33,6 +49,21 @@ usersRouter.post('/', async(request, response) => {
 })
 
 usersRouter.put('/fav/:id', async (request, response, next) => {
+    const { id } = request.params
+    const user = request.body
+    
+    const newGuardInfo = {
+        guards: user.guards
+    }
+    
+    User.findByIdAndUpdate(id, newGuardInfo, { new: true })
+      .then(result => {
+        response.json(result)
+      })
+      .catch(next)
+  })
+
+usersRouter.put('/:id', async (request, response, next) => {
     const { id } = request.params
     const user = request.body
     

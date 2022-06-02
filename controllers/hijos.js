@@ -4,8 +4,12 @@ const Hijo = require('../models/Hijo')
 const User = require('../models/User')
 const userExtractor = require('../middleware/userExtractor')
 
-hijosRouter.get('/', userExtractor, async (request, response) =>{
-    const hijos = await Hijo.find({})
+hijosRouter.get('/', async (request, response) =>{
+    const hijos = await Hijo.find({}).populate('user', {
+      username: 1,
+      name: 1,  
+      id: 1
+    })
     response.json(hijos)
 })
 

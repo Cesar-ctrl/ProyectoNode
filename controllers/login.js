@@ -35,9 +35,11 @@ loginRouter.post('/', async (request, response) =>{
       )
     //console.log()
     response.send({
+        id: user._id,
         name: user.name,
         email: user.email,
-        token
+        token,
+        guards: user.guards
     })
 })
 

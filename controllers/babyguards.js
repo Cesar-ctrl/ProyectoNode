@@ -9,13 +9,13 @@ babyguardsRouter.get('/', async (request, response) =>{
 
 babyguardsRouter.get('/fav', async (request, response) =>{
   const guard = request.body
-
+  
   for (let index = 0; index < guard.guards.length; index++) {
-    
     const newGuardInfo = {
-      _id: guard.guards[index]
+      id: guard.guards[index]
     }
-    const babyguards = await Babyguard.find({newGuardInfo})
+
+    const babyguards = await Babyguard.findById(guard.guards[index])
     response.json(babyguards)
   }
 })
