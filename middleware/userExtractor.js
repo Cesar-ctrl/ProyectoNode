@@ -7,7 +7,7 @@ module.exports = (request, response, next) => {
   if (authorization && authorization.toLowerCase().startsWith('bearer')) {
     token = authorization.substring(7)
   }
-  const decodedToken = jwt.verify(token, process.env.SECRET)
+  const decodedToken = jwt.verify(token, "LoremipsumdolorsitametconsecteturadipiscingelitNuncnonporttitorligulaUtcommodomaurisnomagnaegestavolutpatmieuismodgracias")
   console.log(decodedToken)
   if (!token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })

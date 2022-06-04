@@ -1,13 +1,12 @@
 POST http://localhost:3001/api/hijos
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDM0MjE5NSwiZXhwIjoxNjU0OTQ2OTk1fQ.gc3dSWvnce3nfmVE3mdim_ZwUZOZFV9NJT15sXA2mVQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDM0MjgyMiwiZXhwIjoxNjU0OTQ3NjIyfQ.DQswQFVziuPWpw2_qLrhNM1UrtTVyxbtxcG91QexL5E
 
 {
-    "name": "hijo1",
-    "surnames": "surnames",
-    "edad": "edad",
-    "DNI": "12345678N",
-    "alergenos": 1,
-    "necesidadesesp": "",
-    "user": "6294f48a5fd13bb9d9665565"
+    "alergenos": [true, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    "dni": "12345678N",
+    "edad": 2,
+    "name": "niño",
+    "surnames": "apellido",
+    "user": "6294f01238d3e2b5f85cb448"
 }
