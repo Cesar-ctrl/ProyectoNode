@@ -4,9 +4,9 @@ const {model, Schema} = require('mongoose')
 const hijoSchema = new Schema ({
     name: String,
     surnames: String,
-    edad: String,
-    DNI: String,
-    alergenos: String,
+    edad: Schema.Types.Number,
+    dni: String,
+    alergenos: Array,
     necesidadesesp:String,
     user: {
         type: Schema.Types.ObjectId,

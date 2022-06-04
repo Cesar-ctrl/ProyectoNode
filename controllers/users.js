@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/User')
+const userExtractor = require('../middleware/userExtractor')
 
 usersRouter.get('/', async (request, response) =>{
     const users = await User.find({}).populate('notes', {
@@ -10,7 +11,7 @@ usersRouter.get('/', async (request, response) =>{
     response.json(users)
 })
 
-usersRouter.get('/:id', async (request, response) =>{
+usersRouter.get('/:id', userExtractor, async (request, response) =>{
     const { id } = request.params
     const user = request.body
     User.findById(id)
@@ -48,7 +49,7 @@ usersRouter.post('/', async(request, response) => {
     response.status(201).json(savedUser)
 })
 
-usersRouter.put('/fav/:id', async (request, response, next) => {
+usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params
     const user = request.body
     
@@ -63,7 +64,7 @@ usersRouter.put('/fav/:id', async (request, response, next) => {
       .catch(next)
   })
 
-usersRouter.put('/:id', async (request, response, next) => {
+usersRouter.put('/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params
     const user = request.body
     

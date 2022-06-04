@@ -30,7 +30,7 @@ loginRouter.post('/', async (request, response) =>{
         userForToken,
         'LoremipsumdolorsitametconsecteturadipiscingelitNuncnonporttitorligulaUtcommodomaurisnomagnaegestavolutpatmieuismodgracias',
         {
-          expiresIn: 60 * 60 * 24 * 7
+          expiresIn: 60
         }
       )
     //console.log()

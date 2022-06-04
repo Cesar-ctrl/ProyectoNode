@@ -6,7 +6,7 @@ const babyguardSchema = new Schema({
     surnames: String,
     DNI: String,
     email: String,
-    dias: String,
+    dias: Array,
     horario: String,
     disponible : Boolean,
     passwordHash:String

@@ -1,13 +1,13 @@
 POST http://localhost:3001/api/hijos
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDE5NTMyMiwiZXhwIjoxNjU0ODAwMTIyfQ.lMdQOGv_g9c4JVG9sbZWsa0zhdB-GMjhqRvL6Q8CDNA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDM0MjE5NSwiZXhwIjoxNjU0OTQ2OTk1fQ.gc3dSWvnce3nfmVE3mdim_ZwUZOZFV9NJT15sXA2mVQ
 
 {
     "name": "hijo1",
     "surnames": "surnames",
     "edad": "edad",
     "DNI": "12345678N",
-    "alergenos": "",
+    "alergenos": 1,
     "necesidadesesp": "",
     "user": "6294f48a5fd13bb9d9665565"
 }

@@ -5,9 +5,9 @@ const userSchema = new Schema({
     name: String,
     surnames: String,
     DNI: String,
-    phone: String,
+    phone: Schema.Types.Number,
     email: String,
-    passwordHash:String,
+    passwordHash: String,
     hijos: [{
         type: Schema.Types.ObjectId,
         ref:'Hijo'
