@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/User')
+const Hijo = require('../models/Hijo')
 const userExtractor = require('../middleware/userExtractor')
 
 usersRouter.get('/', async (request, response) =>{
@@ -24,7 +25,31 @@ usersRouter.get('/:id', userExtractor, async (request, response) =>{
     }).catch(err => {
         next(err)   
     })
-    response.json(users)
+    response.json(user)
+})
+
+usersRouter.get('/hijos/:id', userExtractor, async (request, response) =>{
+    const { id } = request.params
+    const user = request.params
+    
+    await User.findById(id).populate('hijos', {
+        name:1,
+        surnames:1,
+        edad:1,
+        dni:1,
+        alergenos:1,
+        necesidadesesp:1
+    })
+    .then(user => {
+        if (user){
+            return response.json(user)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => {
+        next(err)   
+    })
+    response.json(user)
 })
 
 usersRouter.post('/', async(request, response) => {
