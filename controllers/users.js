@@ -12,9 +12,8 @@ usersRouter.get('/', async (request, response) =>{
     response.json(users)
 })
 
-usersRouter.get('/:id', userExtractor, async (request, response) =>{
+usersRouter.get('/:id', async (request, response) =>{
     const { id } = request.params
-    const user = request.body
     User.findById(id)
     .then(user => {
         if (user){
@@ -23,9 +22,8 @@ usersRouter.get('/:id', userExtractor, async (request, response) =>{
             response.status(404).end()
         }
     }).catch(err => {
-        next(err)   
+        console.log(err)   
     })
-    response.json(user)
 })
 
 usersRouter.get('/hijos/:id', userExtractor, async (request, response) =>{
@@ -42,14 +40,15 @@ usersRouter.get('/hijos/:id', userExtractor, async (request, response) =>{
     })
     .then(user => {
         if (user){
-            return response.json(user)
+            response.json(user)
+
         } else {
             response.status(404).end()
         }
     }).catch(err => {
         next(err)   
     })
-    response.json(user)
+   
 })
 
 usersRouter.post('/', async(request, response) => {
