@@ -13,6 +13,16 @@ hijosRouter.get('/', userExtractor, async (request, response) =>{
     response.json(hijos)
 })
 
+hijosRouter.get('/:id', userExtractor, async (request, response) =>{
+  const { id } = request.params
+  const hijo = await Hijo.findById(id).populate('user', {
+    username: 1,
+    name: 1,  
+    id: 1
+  })
+  response.json(hijo)
+})
+
 hijosRouter.post('/', userExtractor, async(request, response, next) => {
     const { name, surnames, edad, DNI, alergenos, necesidadesesp } = request.body
     const { userId } = request
@@ -39,6 +49,26 @@ hijosRouter.post('/', userExtractor, async(request, response, next) => {
         console.log(error)
         next(error)
       }
+})
+
+hijosRouter.put('/:id', userExtractor, async(request, response, next) => {
+  const { id } = request.params
+  const hijo = request.body
+
+  const newHijoInfo = {
+    name: hijo.name,
+    surnames: hijo.surnames,
+    edad: hijo.edad,
+    DNI: hijo.DNI,
+    alergenos: hijo.alergenos,
+    necesidadesesp: hijo.necesidadesesp
+  }
+
+  await Hijo.findByIdAndUpdate(id, newHijoInfo, { new: true })
+    .then(result => {
+      response.json(result)
+    })
+    .catch(next)
 })
 
 module.exports = hijosRouter

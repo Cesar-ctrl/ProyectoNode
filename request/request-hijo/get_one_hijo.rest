@@ -1,3 +1,2 @@
-GET http://localhost:3001/api/hijos
+GET http://localhost:3001/api/hijos/6294dbd27aa45114be3ca8d8
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDU5MDk1MywiZXhwIjoxNjU1MTk1NzUzfQ.bAbZsncEhQIT6gZtadWnoV8ZlLSAxC_C2cUzM3kb4BE
-

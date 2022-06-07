@@ -5,7 +5,7 @@ const hijoSchema = new Schema ({
     name: String,
     surnames: String,
     edad: Schema.Types.Number,
-    dni: String,
+    DNI: String,
     alergenos: Array,
     necesidadesesp:String,
     user: {
@@ -17,7 +17,6 @@ const hijoSchema = new Schema ({
 hijoSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id
-        delete returnedObject._id
         delete returnedObject._v
     }
 })

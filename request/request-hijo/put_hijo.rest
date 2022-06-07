@@ -1,7 +1,29 @@
-PUT http://localhost:3001/api/hijos/62935c8039f4ebfc98905de9
+PUT http://localhost:3001/api/hijos/6294dbd27aa45114be3ca8d8
 content-type: application/json
 
 {
-    "content": "Put contenido nuevo 2",
-    "important": true
+    "name": "hijoedit",
+    "surnames": "surnamesedit",
+    "edad": 4,
+    "dni": "12345678N",
+    "alergenos": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+    ],
+    "user": {
+        "629371b692af9d0261abaf83"
+    },
+    "necesidadesesp": "Una necesidad"
 }

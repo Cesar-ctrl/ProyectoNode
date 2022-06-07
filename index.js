@@ -1,8 +1,8 @@
 require('dotenv').config()
 require('./mongo')
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
+//const multer = require('multer');
+//const GridFsStorage = require('multer-gridfs-storage');
+//const Grid = require('gridfs-stream');
 
 const Sentry = require('@sentry/node')
 const Tracing = require('@sentry/tracing')
@@ -33,31 +33,31 @@ app.use(logger)
 let notes = []
 let hijos = []
 let gfs;
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
-
-const storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-const upload = multer({ storage });
+//conn.once('open', () => {
+//  // Init stream
+//  gfs = Grid(conn.db, mongoose.mongo);
+//  gfs.collection('uploads');
+//});
+//
+//const storage = new GridFsStorage({
+//  url: mongoURI,
+//  file: (req, file) => {
+//    return new Promise((resolve, reject) => {
+//      crypto.randomBytes(16, (err, buf) => {
+//        if (err) {
+//          return reject(err);
+//        }
+//        const filename = buf.toString('hex') + path.extname(file.originalname);
+//        const fileInfo = {
+//          filename: filename,
+//          bucketName: 'uploads'
+//        };
+//        resolve(fileInfo);
+//      });
+//    });
+//  }
+//});
+//const upload = multer({ storage });
 
 Sentry.init({
   dsn: 'https://ac034ebd99274911a8234148642e044c@o537348.ingest.sentry.io/5655435',
