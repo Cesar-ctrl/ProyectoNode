@@ -80,7 +80,7 @@ usersRouter.get('/fav/:id', async (request, response) =>{
 
 usersRouter.post('/', async(request, response) => {
     const { username, name, surnames, DNI, phone, email, password } = request.body
-    console.log(request)
+    
     const saltRounds = 10 
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
@@ -93,6 +93,11 @@ usersRouter.post('/', async(request, response) => {
         email,
         passwordHash
     })
+
+    if(request.file){
+        const { filename } = request.file
+        user.setImgUrl(filename)
+    }
     
     const savedUser = await user.save() 
     

@@ -1,11 +1,18 @@
 require('dotenv').config()
 const { Schema, model } = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const babyguardSchema = new Schema({
     name: String,
     surnames: String,
-    DNI: String,
-    email: String,
+    DNI: {
+        type: String,
+        unique: true
+    },
+    email:{
+        type: String,
+        unique: true
+    },
     dias: Array,
     horario: String,
     disponible : Boolean,
@@ -25,6 +32,9 @@ babyguardSchema.set('toJSON', {
         delete returnedObject.passwordHash
     }
 })
+
+babyguardSchema.plugin(uniqueValidator)
+
 const Babyguard = model('Babyguard', babyguardSchema)
  
 module.exports = Babyguard

@@ -14,6 +14,12 @@ const imgSchema = new Schema ({
     }
 })
 
+imgSchema.methods.setImgUrl = function setImgUrl (filename) {
+    const { host, port } = appConfig
+    this.imgUrl = `${host}:${port}/public/${filename}`
+}
+
+
 const Imagen = model('Imagen', imgSchema)
 
 

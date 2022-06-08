@@ -1,6 +1,8 @@
 const multer = require('multer')
 const imagesRouter = require('express').Router()
 const Imagen = require('../models/Imagen')
+const userExtractor = require('../middleware/userExtractor')
+
 
 const storage = multer.diskStorage({
       destination: (req, file, cb) => {
@@ -14,8 +16,20 @@ const storage = multer.diskStorage({
 )
 const upload = multer({storage})
 
-imagesRouter.post(`/`, upload.single('file'),(req, res) => {
-  res.send({data: 'Imagen creada'})
+imagesRouter.post(`/`,userExtractor , upload.single('file'), async(request, response, next) => {
+  const newImgInfo = new Imagen ({
+    createdat: new Date(),
+    updatedat: new Date()
+  })
+
+  const{ filename } = request.filenewImgInfo.setImgUrl(filename)
+
+  try{
+    const savedImg = await newImgInfo.save()
+    response.json(savedImg)
+  }catch(e){
+    next(e)
+  }
 })
 
 module.exports = imagesRouter

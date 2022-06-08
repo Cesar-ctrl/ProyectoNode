@@ -1,13 +1,20 @@
 const { Schema, model } = require('mongoose')
 const { appConfig } = require('../config')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new Schema({
     username: String,
     name: String,
     surnames: String,
-    DNI: String,
+    DNI: {
+        type: String,
+        unique: true
+    },
     phone: Schema.Types.Number,
-    email: String,
+    email: {
+        type: String,
+        unique: true
+    },
     passwordHash: String,
     hijos: [{
         type: Schema.Types.ObjectId,
@@ -23,19 +30,16 @@ const userSchema = new Schema({
     }]
 })
 
-//userSchema.set('toJSON', {
-//    transform: (document, returnedObject) => {
-//        returnedObject.id = returnedObject._id
-//        delete returnedObject._v
-//
-//        delete returnedObject.passwordHash
-//    }
-//})
+userSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id
+        delete returnedObject._v
 
-userSchema.methods.setImgUrl = function setImgUrl (filename) {
-    const { host, port } = appConfig
-    this.imgUrl = `${host}:${port}/public/${filename}`
-}
+        delete returnedObject.passwordHash
+    }
+})
+
+userSchema.plugin(uniqueValidator)
 
 const User = model('User', userSchema)
  

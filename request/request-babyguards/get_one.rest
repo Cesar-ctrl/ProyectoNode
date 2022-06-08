@@ -1,0 +1,2 @@
+GET http://localhost:3001/api/babyguards/fav/6294de40296b7d01b52de54c
+content-type: application/json

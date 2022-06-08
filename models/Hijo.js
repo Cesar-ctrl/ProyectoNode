@@ -1,11 +1,15 @@
 require('dotenv').config()
 const {model, Schema} = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const hijoSchema = new Schema ({
     name: String,
     surnames: String,
     edad: Schema.Types.Number,
-    DNI: String,
+    DNI: {
+        type: String,
+        unique: true
+    },
     alergenos: Array,
     necesidadesesp:String,
     user: {
@@ -24,6 +28,8 @@ hijoSchema.set('toJSON', {
         delete returnedObject._v
     }
 })
+
+hijoSchema.plugin(uniqueValidator)
 
 const Hijo = model('Hijo', hijoSchema)
 
