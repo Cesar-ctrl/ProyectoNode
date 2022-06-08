@@ -2,11 +2,13 @@ const bcrypt = require('bcrypt')
 const babyguardsRouter = require('express').Router()
 const Babyguard = require('../models/Babyguard')
 
+
+
 babyguardsRouter.get('/', async (request, response) =>{
     const babyguards = await Babyguard.find({})
     response.json(babyguards)
 })
-//https://github.com/bradtraversy/mongo_file_uploads/blob/master/app.js
+
 babyguardsRouter.get('/fav', async (request, response) =>{
   const guard = request.body
   
@@ -42,6 +44,7 @@ babyguardsRouter.post('/', async(request, response) => {
     
     response.json(savedBabyguard)
 })
+
 
 babyguardsRouter.put('/:id', async (request, response, next) => {
     const { id } = request.params

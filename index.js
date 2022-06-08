@@ -30,34 +30,23 @@ app.use(express.json())
 
 app.use(logger) 
 
-let notes = []
-let hijos = []
-let gfs;
-//conn.once('open', () => {
-//  // Init stream
-//  gfs = Grid(conn.db, mongoose.mongo);
-//  gfs.collection('uploads');
-//});
-//
-//const storage = new GridFsStorage({
-//  url: mongoURI,
-//  file: (req, file) => {
-//    return new Promise((resolve, reject) => {
-//      crypto.randomBytes(16, (err, buf) => {
-//        if (err) {
-//          return reject(err);
-//        }
-//        const filename = buf.toString('hex') + path.extname(file.originalname);
-//        const fileInfo = {
-//          filename: filename,
-//          bucketName: 'uploads'
-//        };
-//        resolve(fileInfo);
-//      });
-//    });
-//  }
-//});
-//const upload = multer({ storage });
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+          cb(null,'./uploads')
+      },
+      filename: (req, file, cb) => {
+        const ext = file.originalname.split('.').pop()
+          cb(null,`${Date.now()}.${ext}`)
+      }
+  }
+)
+const upload = multer({storage})
+app.post(`/upload`, upload.single('file'),(req, res) => {
+  res.send({data: 'Imagen creada'})
+})
+
 
 Sentry.init({
   dsn: 'https://ac034ebd99274911a8234148642e044c@o537348.ingest.sentry.io/5655435',
