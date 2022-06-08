@@ -5,9 +5,13 @@ const Hijo = require('../models/Hijo')
 const userExtractor = require('../middleware/userExtractor')
 
 usersRouter.get('/', async (request, response) =>{
-    const users = await User.find({}).populate('notes', {
-        content:1,
-        date:1
+    const users = await User.find({}).populate('hijos', {
+        name:1,
+        surnames:1,
+        edad:1,
+        dni:1,
+        alergenos:1,
+        necesidadesesp:1
     })
     response.json(users)
 })
@@ -75,9 +79,8 @@ usersRouter.get('/fav/:id', async (request, response) =>{
 })
 
 usersRouter.post('/', async(request, response) => {
-    const { body } = request
-    const { username, name, surnames, DNI, phone, email, password } = body
-
+    const { username, name, surnames, DNI, phone, email, password } = request.body
+    console.log(request)
     const saltRounds = 10 
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
@@ -114,14 +117,7 @@ usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
         console.log(error)
         next(error)
     }    
-    //User.findByIdAndUpdate(id, newGuardInfo, { new: true })
-    //  .then(result => {
-    //    response.json(result)
-    //  })
-    //  .catch(next)
 
-
-   
   })
 
 usersRouter.post('/fav/:id', userExtractor, async (request, response, next) => {

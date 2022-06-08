@@ -11,6 +11,7 @@ const app = express()
 const cors = require ('cors')
 const User = require('./models/User')
 const Note = require('./models/Note')
+const Imagen = require('./models/Imagen')
 
 const logger = require('./loggerMiddlewhare')
 
@@ -19,6 +20,7 @@ const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 const userExtractor = require('./middleware/userExtractor')
 
+const imagesRouter = require('./controllers/subeimg')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const loginguardRouter = require('./controllers/loginguard')
@@ -30,22 +32,8 @@ app.use(express.json())
 
 app.use(logger) 
 
-const multer = require('multer')
+app.use('/public', express.static(`${__dirname}/storage/imgs`))
 
-const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-          cb(null,'./uploads')
-      },
-      filename: (req, file, cb) => {
-        const ext = file.originalname.split('.').pop()
-          cb(null,`${Date.now()}.${ext}`)
-      }
-  }
-)
-const upload = multer({storage})
-app.post(`/upload`, upload.single('file'),(req, res) => {
-  res.send({data: 'Imagen creada'})
-})
 
 
 Sentry.init({
@@ -172,7 +160,7 @@ app.put('/api/notes/:id', userExtractor, (request, response, next) => {
       .catch(next)
   })
 //-------------------------MI APP------------------------------------
-
+app.use('/api/img', imagesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/hijos', hijosRouter)

@@ -9,7 +9,11 @@ const babyguardSchema = new Schema({
     dias: Array,
     horario: String,
     disponible : Boolean,
-    passwordHash:String
+    passwordHash:String,
+    imgUrl: [{
+        type: Schema.Types.ObjectId,
+        ref:'Imagen'
+    }]
 })
 
 babyguardSchema.set('toJSON', {

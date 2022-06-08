@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const { appConfig } = require('../config')
 
 const userSchema = new Schema({
     username: String,
@@ -16,20 +17,26 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
     }],
-    notes: [{
+    imgUrl: [{
         type: Schema.Types.ObjectId,
-        ref:'Note'
+        ref:'Imagen'
     }]
 })
 
-userSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id
-        delete returnedObject._v
+//userSchema.set('toJSON', {
+//    transform: (document, returnedObject) => {
+//        returnedObject.id = returnedObject._id
+//        delete returnedObject._v
+//
+//        delete returnedObject.passwordHash
+//    }
+//})
 
-        delete returnedObject.passwordHash
-    }
-})
+userSchema.methods.setImgUrl = function setImgUrl (filename) {
+    const { host, port } = appConfig
+    this.imgUrl = `${host}:${port}/public/${filename}`
+}
+
 const User = model('User', userSchema)
  
 module.exports = User

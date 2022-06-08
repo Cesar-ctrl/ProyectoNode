@@ -11,7 +11,11 @@ const hijoSchema = new Schema ({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    imgUrl: [{
+        type: Schema.Types.ObjectId,
+        ref:'Imagen'
+    }]
 })
 
 hijoSchema.set('toJSON', {

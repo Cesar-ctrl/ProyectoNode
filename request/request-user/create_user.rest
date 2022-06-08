@@ -5,7 +5,7 @@ content-type: application/json
     "name": "Name",
     "surnames": "surnames",
     "DNI": "dni",
-    "phone": "phone",
+    "phone": 123456789,
     "email": "email",
     "password" : "12345678"
 }
