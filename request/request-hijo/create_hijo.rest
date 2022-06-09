@@ -3,11 +3,11 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDM0MjgyMiwiZXhwIjoxNjU0OTQ3NjIyfQ.DQswQFVziuPWpw2_qLrhNM1UrtTVyxbtxcG91QexL5E
 
 {
+    "name": "niño" ,
+    "surnames": "apellido" ,
+    "edad": "2",
+    "DNI": "12345938N" ,
     "alergenos": [true, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    "DNI": "12345938N",
-    "edad": 2,
-    "name": "niño",
-    "surnames": "apellido",
-    "user": "6294f01238d3e2b5f85cb448",
-    "necesidadesesp":"no"
+    "necesidadesesp":"no",
+    "user": "6294f01238d3e2b5f85cb448" 
 }

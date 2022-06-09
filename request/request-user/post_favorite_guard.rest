@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/users/fav/62a1df7fa03b4c99de8fd643
+POST http://localhost:3001/api/users/fav/62a0cb7fa42eef27067a91e7
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBjYjdmYTQyZWVmMjcwNjdhOTFlNyIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDc5NjUwNCwiZXhwIjoxNjU1NDAxMzA0fQ.-OyyLJy8kLKvprjDJQOduG-txjfmzoI6pqbuOb43baU
 
 {
-    "guards":"62a1df7fa03b4c99de8fd643"
+    "guards":"6294f01238d3e2b5f85cb448"
 }

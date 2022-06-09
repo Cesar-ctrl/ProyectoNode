@@ -10,8 +10,8 @@ content-type: application/json
     "dias": [false, false, false, false, false, false, false],
     "horarioinicio": "09:00",
     "horariofin": "17:00",
-    "disponible": false,
-    "password": "12345678",
+
+    "password": "12345678"
     
     
 }
