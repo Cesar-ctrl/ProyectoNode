@@ -34,6 +34,7 @@ loginguardRouter.post('/', async (request, response) =>{
       )
 
     response.send({
+        id: babyguard.id,
         name: babyguard.name,
         email: babyguard.email,
         token

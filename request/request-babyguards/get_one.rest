@@ -1,2 +1,2 @@
-GET http://localhost:3001/api/babyguards/fav/6294de40296b7d01b52de54c
+GET http://localhost:3001/api/babyguards/6294f01238d3e2b5f85cb448
 content-type: application/json

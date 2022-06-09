@@ -13,14 +13,13 @@ const babyguardSchema = new Schema({
         type: String,
         unique: true
     },
+    phone: Schema.Types.Number,
     dias: Array,
-    horario: String,
+    horarioinicio: String,
+    horariofin: String,
     disponible : Boolean,
     passwordHash:String,
-    imgUrl: [{
-        type: Schema.Types.ObjectId,
-        ref:'Imagen'
-    }]
+    descripcion:String
 })
 
 babyguardSchema.set('toJSON', {

@@ -72,9 +72,10 @@ describe('creating a new user', () => {
         const usersAtEnd = await getUsers()
         expect(usersAtEnd).toHaveLength(usersAtStart.length)
       })
-      afterAll(() => {
-        moongose.connection.close()
-        server.close()
-      })
+      
+    afterAll(() => {
+    moongose.connection.close()
+    server.close()
+    })
     
 })

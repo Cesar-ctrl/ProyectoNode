@@ -4,8 +4,8 @@ content-type: application/json
 {
     "name": "Name",
     "surnames": "surnames",
-    "DNI": "dni",
+    "DNI": "dni6",
     "phone": 123456789,
-    "email": "email",
+    "email": "email6",
     "password" : "12345678"
 }

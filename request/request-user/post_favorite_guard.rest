@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/users/fav/6294f48a5fd13bb9d9665565
+POST http://localhost:3001/api/users/fav/62a1df7fa03b4c99de8fd643
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmNDhhNWZkMTNiYjlkOTY2NTU2NSIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDE3OTI2MSwiZXhwIjoxNjU0Nzg0MDYxfQ.OLN1fxGM5sXjt49jKYU3f3I84ZRMTkWRdRdmNWnQPnQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBjYjdmYTQyZWVmMjcwNjdhOTFlNyIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDc5NjUwNCwiZXhwIjoxNjU1NDAxMzA0fQ.-OyyLJy8kLKvprjDJQOduG-txjfmzoI6pqbuOb43baU
 
 {
-    "guards":"6294de40296b7d01b52de54c"
+    "guards":"62a1df7fa03b4c99de8fd643"
 }
