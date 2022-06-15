@@ -111,13 +111,13 @@ usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
     try {
         const usuario = await User.findById(id)
         console.log(usuario.guards)
-        let guardd = 'new ObjectId("'+user.guards+'")'
-        console.log(guardd)
+        let guardd = user.guards.Object
+    
         usuario.guards = usuario.guards.filter(item => item !== guardd);
-        console.log(usuario.guards)
+        console.log(guardd)
         console.log(usuario)
         response.json(usuario)
-
+        await usuario.save() 
     } catch (error) {
         console.log(error)
         next(error)
@@ -143,13 +143,37 @@ usersRouter.post('/fav/:id', userExtractor, async (request, response, next) => {
     }
 })
 
-usersRouter.put('/:id', userExtractor, async (request, response, next) => {
+
+usersRouter.delete('/fav/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params
     const user = request.body
     
     const newGuardInfo = {
         guards: user.guards
     }
+    try {
+        const usuario = await User.findById(id)
+        console.log(newGuardInfo)
+        usuario.guards = usuario.guards.filter(item => item !== newGuardInfo) 
+        response.json(usuario)
+        await usuario.save() 
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+usersRouter.put('/:id', userExtractor, async (request, response, next) => {
+    const { id } = request.params
+    const user = request.body
+    
+    const newGuardInfo = {
+        name: user.name,
+        surnames: user.surnames,
+        phone: user.phone,
+        guards: user.guards
+    }
+    
     
     User.findByIdAndUpdate(id, newGuardInfo, { new: true })
       .then(result => {

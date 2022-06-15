@@ -75,8 +75,41 @@ babyguardsRouter.post('/', async(request, response) => {
     response.json(savedBabyguard)
 })
 
+babyguardsRouter.put('/disp/:id', async (request, response, next) => {
+  const { id } = request.params
+  const guard = request.body
+  
+  const newGuardInfo = {
+    disponible: guard.disponible
+  }
+  
+  Babyguard.findByIdAndUpdate(id, newGuardInfo, { new: true })
+    .then(result => {
+      response.json(result)
+    })
+    .catch(next)
+})
 
 babyguardsRouter.put('/:id', async (request, response, next) => {
+  const { id } = request.params
+  const guard = request.body
+  
+  const newGuardInfo = {
+    name: guard.name,
+    surnames: guard.surnames,
+    dias: guard.dias,
+    horarioinicio: guard.horarioinicio,
+    horariofin: guard.horariofin
+  }
+  
+  Babyguard.findByIdAndUpdate(id, newGuardInfo, { new: true })
+    .then(result => {
+      response.json(result)
+    })
+    .catch(next)
+})
+
+babyguardsRouter.put('/disp/:id', async (request, response, next) => {
     const { id } = request.params
     const guard = request.body
     
