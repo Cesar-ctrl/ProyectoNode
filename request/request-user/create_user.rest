@@ -2,10 +2,12 @@ POST http://localhost:3001/api/users
 content-type: application/json
 
 {
-    "name": "Name",
-    "surnames": "surnames",
-    "DNI": "dni6",
-    "phone": 123456789,
-    "email": "email6",
-    "password" : "12345678"
+    "name": "Landd",
+    "surnames": "apellidod",
+    "DNI": "47415554N",
+    "phone": "987654321",
+    "email": "camado.alumnoww@iesrafaelalberti.es",
+    "password": "12345678"
+    
+    
 }

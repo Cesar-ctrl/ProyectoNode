@@ -3,7 +3,6 @@ const { appConfig } = require('../config')
 const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new Schema({
-    username: String,
     name: String,
     surnames: String,
     DNI: {
