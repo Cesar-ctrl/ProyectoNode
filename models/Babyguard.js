@@ -19,7 +19,8 @@ const babyguardSchema = new Schema({
     horariofin: String,
     disponible : Boolean,
     passwordHash:String,
-    descripcion:String
+    descripcion:String,
+    imgUrl: String
 })
 
 babyguardSchema.set('toJSON', {

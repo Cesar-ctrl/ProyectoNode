@@ -161,7 +161,8 @@ usersRouter.put('/:id', userExtractor, async (request, response, next) => {
         name: user.name,
         surnames: user.surnames,
         phone: user.phone,
-        guards: user.guards
+        guards: user.guards,
+        imgUrl:user.imgUrl
     }
     
     

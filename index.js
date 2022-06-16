@@ -178,9 +178,7 @@ app.put('/api/notes/:id', userExtractor, (request, response, next) => {
 app.use('/api/img/public', express.static(`${__dirname}/uploads`))
 
 app.post('/api/img', upload.single('file'), async (request, response) => {
-  console.log(request)
-  console.log(request.body)
-  console.log(request.id  )
+  console.log( request.file )
   const newImgInfo = new Imagen ({
     createdat: new Date(),
     updatedat: new Date()
@@ -188,7 +186,7 @@ app.post('/api/img', upload.single('file'), async (request, response) => {
   const { filename } = request.file
   //const usuario = await User.findById(id)
 
-  response.send(request.file)
+  response.json(request.file)
 })
 
 //app.get('/api/img/:id', (request, response) => {

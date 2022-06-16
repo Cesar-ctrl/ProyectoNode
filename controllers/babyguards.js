@@ -69,6 +69,7 @@ babyguardsRouter.post('/', async(request, response) => {
         horarioinicio,
         horariofin,
         disponible,
+        imgUrl:"1655398811921.jpg",
         passwordHash
     })
     
@@ -98,10 +99,12 @@ babyguardsRouter.put('/:id', async (request, response, next) => {
   const newGuardInfo = {
     name: guard.name,
     surnames: guard.surnames,
+    phone: guard.phone,
     dias: guard.dias,
     horarioinicio: guard.horarioinicio,
     horariofin: guard.horariofin,
-    descripcion: guard.descripcion
+    descripcion: guard.descripcion,
+    imgUrl:guard.imgUrl
   }
   
   Babyguard.findByIdAndUpdate(id, newGuardInfo, { new: true })
