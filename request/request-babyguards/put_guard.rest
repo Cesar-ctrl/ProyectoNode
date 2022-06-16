@@ -1,7 +1,12 @@
-PUT http://localhost:3001/api/babyguards/6294f01238d3e2b5f85cb448
+PUT http://localhost:3001/api/babyguards/62aaeddf0512671d470ff8b8
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTFlOTgwNzJmMzk1MGY1NWM0ZDY2MSIsImVtYWlsIjoidXN1YXJpbzFAYXBlbGxpZG82LmNvbSIsImlhdCI6MTY1NDc3ODI5NiwiZXhwIjoxNjU1MzgzMDk2fQ.UNk5lLoppXz2JQTfrPLYwHbiGqN_fJQRpu1AHl9Ei6c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWFlZGRmMDUxMjY3MWQ0NzBmZjhiOCIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NTM3NTYzMywiZXhwIjoxNjU1OTgwNDMzfQ.A04ixg1aK7QbFzfKFz1Z4b8oHh7PZOPRsOUNy7V3emE
 
 {
-    "name": "Nombre"
+    "dias": [false, false, false, false, false, false, false],
+    "horariofin": "17:00",
+    "horarioinicio": "09:00",
+    "name": "CesarCambio",
+    "phone": "987654321",
+    "surnames": "AmadoA"
 }

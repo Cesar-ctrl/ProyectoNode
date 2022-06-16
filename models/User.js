@@ -23,11 +23,12 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
     }],
-    imgUrl: [{
-        type: Schema.Types.ObjectId,
-        ref:'Imagen'
-    }]
+    imgUrl: String
 })
+userSchema.methods,setImgUrl = function setImgUrl (filename){
+    const {host, port} = appConfig
+    this.imgUrl = `http://localhost:3001/public/${filename}`
+}
 
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {

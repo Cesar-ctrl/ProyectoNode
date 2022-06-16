@@ -27,7 +27,7 @@ loginguardRouter.post('/', async (request, response) =>{
 
     const token = jwt.sign(
         guardForToken,
-        process.env.SECRET,
+        'LoremipsumdolorsitametconsecteturadipiscingelitNuncnonporttitorligulaUtcommodomaurisnomagnaegestavolutpatmieuismodgracias',
         {
           expiresIn: 60 * 60 * 24 * 7
         }

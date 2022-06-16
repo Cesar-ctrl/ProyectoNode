@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const babyguardsRouter = require('express').Router()
 const Babyguard = require('../models/Babyguard')
+const imagesRouter = require('../controllers/subeimg')
 
 
 
@@ -53,7 +54,7 @@ babyguardsRouter.get('/fav', async (request, response) =>{
 
 babyguardsRouter.post('/', async(request, response) => {
     const { body } = request
-    const { name, surnames, DNI, email, dias, horarioinicio, horariofin, disponible, password } = body
+    const { name, surnames, DNI, phone, email, dias, horarioinicio, horariofin, disponible, password } = body
 
     const saltRounds = 10 
     const passwordHash = await bcrypt.hash(password, saltRounds)
@@ -62,6 +63,7 @@ babyguardsRouter.post('/', async(request, response) => {
         name,
         surnames,
         DNI,
+        phone,
         email,
         dias,
         horarioinicio,
@@ -93,13 +95,13 @@ babyguardsRouter.put('/disp/:id', async (request, response, next) => {
 babyguardsRouter.put('/:id', async (request, response, next) => {
   const { id } = request.params
   const guard = request.body
-  
   const newGuardInfo = {
     name: guard.name,
     surnames: guard.surnames,
     dias: guard.dias,
     horarioinicio: guard.horarioinicio,
-    horariofin: guard.horariofin
+    horariofin: guard.horariofin,
+    descripcion: guard.descripcion
   }
   
   Babyguard.findByIdAndUpdate(id, newGuardInfo, { new: true })

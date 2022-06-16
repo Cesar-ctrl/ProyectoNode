@@ -2,6 +2,6 @@ POST http://localhost:3001/api/loginguards
 content-type: application/json
 
 {
-    "email": "usuario1@apellido6.com",
-    "password" : "12345678"
+    "email": "amadocesar02@gmail.com",
+    "password": "12345678"
 }

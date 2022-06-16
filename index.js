@@ -7,8 +7,10 @@ require('./mongo')
 const Sentry = require('@sentry/node')
 const Tracing = require('@sentry/tracing')
 const express = require ('express')
-const app = express()
 const cors = require ('cors')
+const multer = require('multer')
+const app = express()
+const path = require('path');
 const User = require('./models/User')
 const Note = require('./models/Note')
 const Imagen = require('./models/Imagen')
@@ -17,7 +19,7 @@ const logger = require('./loggerMiddlewhare')
 
 //const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
-const handleErrors = require('./middleware/handleErrors')
+//const handleErrors = require('./middleware/handleErrors')
 const userExtractor = require('./middleware/userExtractor')
 
 const imagesRouter = require('./controllers/subeimg')
@@ -32,7 +34,6 @@ app.use(express.json())
 
 app.use(logger) 
 
-app.use('/public', express.static(`${__dirname}/storage/imgs`))
 
 
 
@@ -54,6 +55,20 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler())
 
 app.use(Sentry.Handlers.tracingHandler())
+
+const uploadsDir = path.resolve(__dirname, 'uploads');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null,'./uploads')
+  },
+  filename: (req, file, cb) => {
+    const ext = file.originalname.split('.').pop()
+    cb(null,`${Date.now()}.${ext}`)
+  }
+})
+const upload = multer({ storage })
+
 
 app.get('/', (request, response) => {
   console.log(request.ip)
@@ -160,7 +175,26 @@ app.put('/api/notes/:id', userExtractor, (request, response, next) => {
       .catch(next)
   })
 //-------------------------MI APP------------------------------------
-app.use('/api/img', imagesRouter)
+app.use('/api/img/public', express.static(`${__dirname}/uploads`))
+
+app.post('/api/img', upload.single('file'), async (request, response) => {
+  console.log(request)
+  console.log(request.body)
+  console.log(request.id  )
+  const newImgInfo = new Imagen ({
+    createdat: new Date(),
+    updatedat: new Date()
+  }) 
+  const { filename } = request.file
+  //const usuario = await User.findById(id)
+
+  response.send(request.file)
+})
+
+//app.get('/api/img/:id', (request, response) => {
+//  const { id } = request.params
+//})
+
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/hijos', hijosRouter)
@@ -169,7 +203,7 @@ app.use('/api/babyguards', babyguardsRouter)
 
 app.use(notFound)
 app.use(Sentry.Handlers.errorHandler())
-app.use(handleErrors) 
+//app.use(handleErrors) 
 
 
 

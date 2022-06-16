@@ -93,11 +93,6 @@ usersRouter.post('/', async(request, response) => {
         email,
         passwordHash
     })
-
-    if(request.file){
-        const { filename } = request.file
-        user.setImgUrl(filename)
-    }
     
     const savedUser = await user.save() 
     
@@ -110,12 +105,9 @@ usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
 
     try {
         const usuario = await User.findById(id)
-        console.log(usuario.guards)
         let guardd = user.guards.Object
     
         usuario.guards = usuario.guards.filter(item => item !== guardd);
-        console.log(guardd)
-        console.log(usuario)
         response.json(usuario)
         await usuario.save() 
     } catch (error) {
@@ -153,7 +145,6 @@ usersRouter.delete('/fav/:id', userExtractor, async (request, response, next) =>
     }
     try {
         const usuario = await User.findById(id)
-        console.log(newGuardInfo)
         usuario.guards = usuario.guards.filter(item => item !== newGuardInfo) 
         response.json(usuario)
         await usuario.save() 
@@ -166,7 +157,6 @@ usersRouter.delete('/fav/:id', userExtractor, async (request, response, next) =>
 usersRouter.put('/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params
     const user = request.body
-    
     const newGuardInfo = {
         name: user.name,
         surnames: user.surnames,

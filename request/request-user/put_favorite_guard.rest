@@ -1,4 +1,4 @@
-PUT http://localhost:3001/api/users/fav/62a0cb7fa42eef27067a91e7
+PUT  http://localhost:3001/api/users/fav/62a0cb7fa42eef27067a91e7
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBjYjdmYTQyZWVmMjcwNjdhOTFlNyIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NDc5NzEzNCwiZXhwIjoxNjU1NDAxOTM0fQ.leFC3bBgDH3HGnCbpKWGDhC680rEUPLLMJFSAWRO0Yg
 

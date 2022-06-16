@@ -5,31 +5,24 @@ const userExtractor = require('../middleware/userExtractor')
 
 
 const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-          cb(null,'./storage/imgs')
-      },
-      filename: (req, file, cb) => {
-        const ext = file.originalname.split('.').pop()
-          cb(null,`${Date.now()}.${ext}`)
-      }
-  }
-)
-const upload = multer({storage})
+    destination: (req, file, cb) => {
+        cb(null,'./storage')
+    },
+    filename: (req, file, cb) => {
+      const ext = file.originalname.split('.').pop()
+      cb(null,`${Date.now()}.${ext}`)
+    }
+})
+const upload = multer({ storage })
 
-imagesRouter.post(`/`,userExtractor , upload.single('file'), async(request, response, next) => {
+imagesRouter.post(`/api/img`,userExtractor , upload.single('file'), (request, response) => {
+  console.log(request)
   const newImgInfo = new Imagen ({
     createdat: new Date(),
     updatedat: new Date()
   })
+  response.send({ data: 'Imagen creada?'})
 
-  const{ filename } = request.filenewImgInfo.setImgUrl(filename)
-
-  try{
-    const savedImg = await newImgInfo.save()
-    response.json(savedImg)
-  }catch(e){
-    next(e)
-  }
 })
 
 module.exports = imagesRouter
