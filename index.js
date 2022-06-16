@@ -19,7 +19,7 @@ const logger = require('./loggerMiddlewhare')
 
 //const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
-//const handleErrors = require('./middleware/handleErrors')
+const handleErrors = require('./middleware/handleErrors')
 const userExtractor = require('./middleware/userExtractor')
 
 const imagesRouter = require('./controllers/subeimg')
@@ -201,7 +201,7 @@ app.use('/api/babyguards', babyguardsRouter)
 
 app.use(notFound)
 app.use(Sentry.Handlers.errorHandler())
-//app.use(handleErrors) 
+app.use(handleErrors) 
 
 
 

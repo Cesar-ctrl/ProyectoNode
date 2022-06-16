@@ -3,5 +3,5 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTFlOTgwNzJmMzk1MGY1NWM0ZDY2MSIsImVtYWlsIjoidXN1YXJpbzFAYXBlbGxpZG82LmNvbSIsImlhdCI6MTY1NDc3ODI5NiwiZXhwIjoxNjU1MzgzMDk2fQ.UNk5lLoppXz2JQTfrPLYwHbiGqN_fJQRpu1AHl9Ei6c
 
 {
-    "disponible": true
+    "disponible": false
 }

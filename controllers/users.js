@@ -106,8 +106,9 @@ usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
     try {
         const usuario = await User.findById(id)
         let guardd = user.guards.Object
-    
+        console.log(user)
         usuario.guards = usuario.guards.filter(item => item !== guardd);
+        console.log(usuario.guards)
         response.json(usuario)
         await usuario.save() 
     } catch (error) {
