@@ -105,10 +105,10 @@ usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
 
     try {
         const usuario = await User.findById(id)
-        let guardd = user.guards.Object
-        console.log(user)
-        usuario.guards = usuario.guards.filter(item => item !== guardd);
         console.log(usuario.guards)
+        let guardd = user.guards
+        console.log(guardd)
+        usuario.guards = usuario.guards.filter(item => item.toHexString() !== guardd);
         response.json(usuario)
         await usuario.save() 
     } catch (error) {
@@ -146,6 +146,7 @@ usersRouter.delete('/fav/:id', userExtractor, async (request, response, next) =>
     }
     try {
         const usuario = await User.findById(id)
+        
         usuario.guards = usuario.guards.filter(item => item !== newGuardInfo) 
         response.json(usuario)
         await usuario.save() 
