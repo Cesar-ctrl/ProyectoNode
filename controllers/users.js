@@ -65,6 +65,10 @@ usersRouter.get('/fav/:id', async (request, response) =>{
         name:1,
         surnames:1,
         disponible:1,
+        horarioinicio:1,
+        horariofin:1,
+        disponible:1,
+        imgUrl:1
     })
     .then(user => {
         if (user){
@@ -137,24 +141,6 @@ usersRouter.post('/fav/:id', userExtractor, async (request, response, next) => {
 })
 
 
-usersRouter.delete('/fav/:id', userExtractor, async (request, response, next) => {
-    const { id } = request.params
-    const user = request.body
-    
-    const newGuardInfo = {
-        guards: user.guards
-    }
-    try {
-        const usuario = await User.findById(id)
-        
-        usuario.guards = usuario.guards.filter(item => item !== newGuardInfo) 
-        response.json(usuario)
-        await usuario.save() 
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
 
 usersRouter.put('/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params

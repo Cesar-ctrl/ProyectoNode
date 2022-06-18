@@ -1,1 +1,1 @@
-GET http://localhost:3001/api/users/fav/6294f48a5fd13bb9d9665565
+GET http://localhost:3001/api/users/fav/62a0cb7fa42eef27067a91e7
