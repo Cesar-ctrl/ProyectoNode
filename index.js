@@ -11,6 +11,7 @@ const cors = require ('cors')
 const multer = require('multer')
 const app = express()
 const path = require('path');
+const socket = require('socket.io')
 const User = require('./models/User')
 const Note = require('./models/Note')
 const Imagen = require('./models/Imagen')
@@ -28,6 +29,7 @@ const loginRouter = require('./controllers/login')
 const loginguardRouter = require('./controllers/loginguard')
 const hijosRouter = require('./controllers/hijos')
 const babyguardsRouter = require('./controllers/babyguards')
+const messagesRouter = require('./controllers/messages')
 
 app.use(cors())
 app.use(express.json())
@@ -198,17 +200,38 @@ app.use('/api/login', loginRouter)
 app.use('/api/hijos', hijosRouter)
 app.use('/api/loginguards', loginguardRouter)
 app.use('/api/babyguards', babyguardsRouter)
+app.use('/api/messages', messagesRouter)
 
 app.use(notFound)
 app.use(Sentry.Handlers.errorHandler())
 app.use(handleErrors) 
 
-
-
-
 const PORT = process.env.PORT || 3001
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
+});
+
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
+  });
+});
+
 
 module.exports = { app, server }
