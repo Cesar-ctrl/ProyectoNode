@@ -1,9 +1,0 @@
-POST https://damp-temple-29994.herokuapp.com/api/notes
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTM3MWI2OTJhZjlkMDI2MWFiYWY4MyIsInVzZXJuYW1lIjoiVXNlcm5hbWUyIiwiaWF0IjoxNjUzOTI3ODQ5LCJleHAiOjE2NTQ1MzI2NDl9.HJjoM2ReUcQmRsbDxQ4mseVauMtBx3rAfhJPiLH55S4
-
-{
-    "content": "contenido Nota Con usuario ",
-    "important": true,
-    "userId":"629371b692af9d0261abaf83"
-}
