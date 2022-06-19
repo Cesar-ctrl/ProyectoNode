@@ -1,0 +1,6 @@
+POST http://localhost:3001/api/babyguards/chat/62a1df7fa03b4c99de8fd643
+content-type: application/json
+
+{
+    "chats":"62a0cb7fa42eef27067a91e7"
+}

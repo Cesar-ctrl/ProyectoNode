@@ -64,11 +64,11 @@ usersRouter.get('/fav/:id', async (request, response) =>{
     await User.findById(id).populate('guards', {
         name:1,
         surnames:1,
-        disponible:1,
         horarioinicio:1,
         horariofin:1,
         disponible:1,
-        imgUrl:1
+        imgUrl:1,
+        chats:1
     })
     .then(user => {
         if (user){
@@ -103,6 +103,24 @@ usersRouter.post('/', async(request, response) => {
     response.status(201).json(savedUser)
 })
 
+usersRouter.post('/fav/:id', userExtractor, async (request, response, next) => {
+    const { id } = request.params
+    const user = request.body
+    
+    const newUserInfo = {
+        guards: user.guards
+    }
+    try {
+        const usuario = await User.findById(id)
+        usuario.guards = usuario.guards.concat(newUserInfo.guards) 
+        response.json(usuario)
+        await usuario.save() 
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
 usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params
     const user = request.body
@@ -122,30 +140,10 @@ usersRouter.put('/fav/:id', userExtractor, async (request, response, next) => {
 
   })
 
-usersRouter.post('/fav/:id', userExtractor, async (request, response, next) => {
-    const { id } = request.params
-    const user = request.body
-    
-    const newGuardInfo = {
-        guards: user.guards
-    }
-    try {
-        const usuario = await User.findById(id)
-        usuario.guards = usuario.guards.concat(newGuardInfo.guards) 
-        response.json(usuario)
-        await usuario.save() 
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
-
-
-
 usersRouter.put('/:id', userExtractor, async (request, response, next) => {
     const { id } = request.params
     const user = request.body
-    const newGuardInfo = {
+    const newUserInfo = {
         name: user.name,
         surnames: user.surnames,
         phone: user.phone,
@@ -154,11 +152,53 @@ usersRouter.put('/:id', userExtractor, async (request, response, next) => {
     }
     
     
-    User.findByIdAndUpdate(id, newGuardInfo, { new: true })
+    User.findByIdAndUpdate(id, newUserInfo, { new: true })
       .then(result => {
         response.json(result)
       })
       .catch(next)
   })
+
+
+usersRouter.post('/chat/:id', async (request, response, next) => {
+    const { id } = request.params
+    const user = request.body
+    
+    const newUserInfo = {
+        chats: user.chats
+    }
+    try {
+        const usuario = await User.findById(id)
+        usuario.chats = usuario.chats.concat(newUserInfo.chats) 
+        response.json(usuario)
+        await usuario.save() 
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+usersRouter.get('/chat/:id', async (request, response) =>{
+    const { id } = request.params
+    await User.findById(id).populate('chats', {
+        name:1,
+        surnames:1,
+        horarioinicio:1,
+        horariofin:1,
+        disponible:1,
+        imgUrl:1,
+        chats:1
+    })
+    .then(user => {
+        if (user){
+            return response.json(user)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => {
+        console.log(err)   
+    })
+   
+})
 
 module.exports = usersRouter

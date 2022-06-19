@@ -20,7 +20,11 @@ const babyguardSchema = new Schema({
     disponible : Boolean,
     passwordHash:String,
     descripcion:String,
-    imgUrl: String
+    imgUrl: String,
+    chats: [{
+        type: Schema.Types.ObjectId,
+        ref:'User'
+    }],
 })
 
 babyguardSchema.set('toJSON', {

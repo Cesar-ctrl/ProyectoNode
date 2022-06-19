@@ -23,7 +23,11 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
     }],
-    imgUrl: String
+    imgUrl: String,
+    chats: [{
+        type: Schema.Types.ObjectId,
+        ref:'Babyguard'
+    }]
 })
 userSchema.methods,setImgUrl = function setImgUrl (filename){
     const {host, port} = appConfig

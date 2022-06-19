@@ -127,9 +127,9 @@ babyguardsRouter.put('/disp/:id', async (request, response, next) => {
         response.json(result)
       })
       .catch(next)
-  })
+})
 
-  babyguardsRouter.put('/desc/:id', async (request, response, next) => {
+babyguardsRouter.put('/desc/:id', async (request, response, next) => {
     const { id } = request.params
     const guard = request.body
     
@@ -142,9 +142,9 @@ babyguardsRouter.put('/disp/:id', async (request, response, next) => {
         response.json(result)
       })
       .catch(next)
-  })
+})
 
-  babyguardsRouter.put('/horario/:id', async (request, response, next) => {
+babyguardsRouter.put('/horario/:id', async (request, response, next) => {
     const { id } = request.params
     const guard = request.body
     
@@ -158,7 +158,47 @@ babyguardsRouter.put('/disp/:id', async (request, response, next) => {
         response.json(result)
       })
       .catch(next)
+})
+
+
+babyguardsRouter.post('/chat/:id', async (request, response, next) => {
+    const { id } = request.params
+    const guard = request.body
+    
+    const newGuardInfo = {
+        chats: guard.chats
+    }
+    try {
+        const babyguard = await Babyguard.findById(id)
+        babyguard.chats = babyguard.chats.concat(newGuardInfo.chats) 
+        response.json(babyguard)
+        await babyguard.save() 
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+babyguardsRouter.get('/chat/:id', async (request, response) =>{
+  const { id } = request.params
+  await Babyguard.findById(id).populate('chats', {
+      name:1,
+      surnames:1,
+      hijos:1,
+      imgUrl:1
   })
+  .then(guard => {
+      if (guard){
+          return response.json(guard)
+      } else {
+          response.status(404).end()
+      }
+  }).catch(err => {
+      console.log(err)   
+  })
+ 
+})
+
   
 
 module.exports = babyguardsRouter

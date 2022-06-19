@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/users/chat/62a0cb7fa42eef27067a91e7
