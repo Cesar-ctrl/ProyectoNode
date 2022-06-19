@@ -32,11 +32,7 @@ const messagesRouter = require('./controllers/messages')
 
 app.use(cors())
 app.use(express.json())
-
 app.use(logger) 
-
-
-
 
 Sentry.init({
   dsn: 'https://ac034ebd99274911a8234148642e044c@o537348.ingest.sentry.io/5655435',
@@ -93,10 +89,6 @@ app.post('/api/img', upload.single('file'), async (request, response) => {
 
   response.json(request.file)
 })
-
-//app.get('/api/img/:id', (request, response) => {
-//  const { id } = request.params
-//})
 
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
