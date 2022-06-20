@@ -4,7 +4,6 @@ const Babyguard = require('../models/Babyguard')
 const imagesRouter = require('../controllers/subeimg')
 
 
-
 babyguardsRouter.get('/', async (request, response) =>{
     const babyguards = await Babyguard.find({})
     response.json(babyguards)

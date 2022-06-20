@@ -105,7 +105,8 @@ const PORT = process.env.PORT || 3001
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
-
+//Si se quiere probar en local
+// Cambiar origin: "https://babyguard.vercel.app" por origin: "http://localhost:3000"
 const io = socket(server, {
   cors: {
     origin: "https://babyguard.vercel.app",

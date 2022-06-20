@@ -9,7 +9,7 @@ usersRouter.get('/', async (request, response) =>{
         name:1,
         surnames:1,
         edad:1,
-        dni:1,
+        DNI:1,
         alergenos:1,
         necesidadesesp:1
     })
@@ -22,7 +22,7 @@ usersRouter.get('/:id', async (request, response) =>{
         name:1,
         surnames:1,
         edad:1,
-        dni:1,
+        DNI:1,
         alergenos:1,
         necesidadesesp:1
     })
