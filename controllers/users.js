@@ -24,7 +24,8 @@ usersRouter.get('/:id', async (request, response) =>{
         edad:1,
         DNI:1,
         alergenos:1,
-        necesidadesesp:1
+        necesidadesesp:1,
+        imgUrl:1
     })
     .then(user => {
         if (user){
