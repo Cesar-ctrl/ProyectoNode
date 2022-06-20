@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt')
 const hijosRouter = require('express').Router()
 const Hijo = require('../models/Hijo')
 const User = require('../models/User')
