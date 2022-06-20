@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const loginguardRouter = require('express').Router()
 const Babyguard = require('../models/Babyguard')
 
-
+//LoginGuard es lo mismo que login pero solo para Niñeras
 loginguardRouter.post('/', async (request, response) =>{
     const { body } = request 
     const { email, password } = body 

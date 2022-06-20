@@ -1,8 +1,5 @@
 require('dotenv').config()
 require('./mongo')
-//const multer = require('multer');
-//const GridFsStorage = require('multer-gridfs-storage');
-//const Grid = require('gridfs-stream');
 
 const Sentry = require('@sentry/node')
 const Tracing = require('@sentry/tracing')
@@ -17,12 +14,10 @@ const Imagen = require('./models/Imagen')
 
 const logger = require('./loggerMiddlewhare')
 
-//const Hijo = require('./models/Hijo')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 const userExtractor = require('./middleware/userExtractor')
 
-const imagesRouter = require('./controllers/subeimg')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const loginguardRouter = require('./controllers/loginguard')
@@ -50,21 +45,24 @@ Sentry.init({
 
 
 app.use(Sentry.Handlers.requestHandler())
-
 app.use(Sentry.Handlers.tracingHandler())
 
 const uploadsDir = path.resolve(__dirname, 'uploads');
-
+//Multer hace que sea fácil manipular este multipart/form-data cuando tus usuarios suben archivos.
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
       cb(null,'./uploads')
+      // Indico donde se van a guardar las imagenes
   },
   filename: (req, file, cb) => {
     const ext = file.originalname.split('.').pop()
     cb(null,`${Date.now()}.${ext}`)
+    // Cambio el nombre del archivo para que no se repitan
   }
 })
 const upload = multer({ storage })
+
+//A partir de aquí se llama a los controllers de la applicación 
 
 
 app.get('/', (request, response) => {
@@ -90,6 +88,9 @@ app.post('/api/img', upload.single('file'), async (request, response) => {
   response.json(request.file)
 })
 
+//Para no tener todos los controladores en un mismo archivo los he separado 
+//haciendo uso de .use especifico las rutas y el Router de cada uno
+
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/hijos', hijosRouter)
@@ -97,14 +98,22 @@ app.use('/api/loginguards', loginguardRouter)
 app.use('/api/babyguards', babyguardsRouter)
 app.use('/api/messages', messagesRouter)
 
+
+// Aquí  se llaman a los middlewares de control de errores
+
 app.use(notFound)
 app.use(Sentry.Handlers.errorHandler())
 app.use(handleErrors) 
 
+
+//Se hace levanta el servidor, hay que especificar el puerto
 const PORT = process.env.PORT || 3001
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+//Socket.IO es una biblioteca de JavaScript basada en eventos para aplicaciones web en tiempo real.
+//La voy a utilizar para que el chat sea a tiempo real
 //Si se quiere probar en local
 // Cambiar origin: "https://babyguard.vercel.app" por origin: "http://localhost:3000"
 const io = socket(server, {

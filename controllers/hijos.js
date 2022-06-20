@@ -4,6 +4,7 @@ const Hijo = require('../models/Hijo')
 const User = require('../models/User')
 const userExtractor = require('../middleware/userExtractor')
 
+//Método get para traer todos los niños
 hijosRouter.get('/', userExtractor, async (request, response) =>{
     const hijos = await Hijo.find({}).populate('user', {
       username: 1,
@@ -13,16 +14,17 @@ hijosRouter.get('/', userExtractor, async (request, response) =>{
     response.json(hijos)
 })
 
+//Método get para traer a un niño junto con un poco de información del padre
 hijosRouter.get('/:id', userExtractor, async (request, response) =>{
   const { id } = request.params
   const hijo = await Hijo.findById(id).populate('user', {
-    username: 1,
     name: 1,  
     id: 1
   })
   response.json(hijo)
 })
 
+//Método post para crear un niño, se debe especificar a que usuario pertenece
 hijosRouter.post('/', userExtractor, async(request, response, next) => {
     const { name, surnames, edad, DNI, alergenos, necesidadesesp, imgUrl } = request.body
     const { userId } = request
@@ -41,10 +43,8 @@ hijosRouter.post('/', userExtractor, async(request, response, next) => {
     
     try {
         const savedHijo = await newHijo.save()
-    
         user.hijos = user.hijos.concat(savedHijo._id)
         await user.save()
-    
         response.json(savedHijo)
       } catch (error) {
         console.log(error)
@@ -52,6 +52,7 @@ hijosRouter.post('/', userExtractor, async(request, response, next) => {
       }
 })
 
+// Método put para editar la información completa o parcial de un niño
 hijosRouter.put('/:id', userExtractor, async(request, response, next) => {
   const { id } = request.params
   const hijo = request.body
@@ -72,5 +73,7 @@ hijosRouter.put('/:id', userExtractor, async(request, response, next) => {
     })
     .catch(next)
 })
+
+//No he añadido método delete, sería muy triste tener que borrar a un niño
 
 module.exports = hijosRouter

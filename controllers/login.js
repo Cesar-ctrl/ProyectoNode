@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken')
+//jsonwebtoken permite la creación de tokens
 const bcrypt = require('bcrypt')
+//bcrypt es una función de hashing de contraseñas
 const loginRouter = require('express').Router()
 const User = require('../models/User')
 
-
+//Método post para enviar y comprobar la información de inicio de sesión 
 loginRouter.post('/', async (request, response) =>{
     const { body } = request 
     const { email, password } = body 
@@ -11,6 +13,7 @@ loginRouter.post('/', async (request, response) =>{
 
     const user = await User.findOne({ email })
     
+    //Aquí compara la contraseña dada con la codificada en la BD
     const passwordCorrect = user === null
     ? false
     : await bcrypt.compare(password, user.passwordHash)
@@ -26,6 +29,7 @@ loginRouter.post('/', async (request, response) =>{
         email: user.email
     }
 
+    // Creación de un Token para un Id y un email especificos
     const token = jwt.sign(
         userForToken,
         'LoremipsumdolorsitametconsecteturadipiscingelitNuncnonporttitorligulaUtcommodomaurisnomagnaegestavolutpatmieuismodgracias',
@@ -33,7 +37,7 @@ loginRouter.post('/', async (request, response) =>{
           expiresIn: 60 * 60 * 24 * 7
         }
       )
-    //console.log()
+    //Envia la respuesta
     response.send({
         id: user._id,
         name: user.name,

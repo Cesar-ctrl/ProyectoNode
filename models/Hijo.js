@@ -2,6 +2,8 @@ require('dotenv').config()
 const {model, Schema} = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
+//Modelo de Niños
+
 const hijoSchema = new Schema ({
     name: String,
     surnames: String,
@@ -19,6 +21,8 @@ const hijoSchema = new Schema ({
     imgUrl: String
 })
 
+//Evito que devuelva algunos elementos que son innecesarios
+
 hijoSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id
@@ -26,6 +30,7 @@ hijoSchema.set('toJSON', {
     }
 })
 
+//El uniqueValidator evita que haya valores iguales en la base de datos lanzando un error
 hijoSchema.plugin(uniqueValidator)
 
 const Hijo = model('Hijo', hijoSchema)

@@ -1,16 +1,22 @@
 const Messages = require("../models/Message");
 const messagesRouter = require('express').Router()
 
+//Método Post para recibir el usuario que envia y el que recibe
+//para luego enviar todos los mensajes con esos dos participantes
+// No hay distinción entre Niñeras y usuarios en este método.
 messagesRouter.post('/getmsg', async (request, response, next) => {
   try {
+    //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
     const { from, to } = request.body;
-
+    
+    //Busca todos los mensajes que tengan el usuario especificado
     const messages = await Messages.find({
       users: {
         $all: [from, to],
       },
     }).sort({ updatedAt: 1 });
 
+    //Devuelve todos los menajes 
     const projectedMessages = messages.map((msg) => {
       return {
         fromSelf: msg.sender.toString() === from,
@@ -23,6 +29,7 @@ messagesRouter.post('/getmsg', async (request, response, next) => {
   }
 })
 
+//Método post para enviar mensajes al igual que recibir tiene un to y from pero a demas tiene el mensaje
 messagesRouter.post('/addmsg', async (request, response, next) => {
   try {
     const { from, to, message } = request.body;

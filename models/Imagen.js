@@ -1,6 +1,8 @@
 require('dotenv').config()
 const {model, Schema} = require('mongoose')
 
+//Modelo de las imagenes aunque no se suben a MongoDB
+
 const imgSchema = new Schema ({
     lastModified: Schema.Types.Number,
     lastModifiedDate: Date,

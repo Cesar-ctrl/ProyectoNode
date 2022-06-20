@@ -2,6 +2,8 @@ require('dotenv').config()
 const { Schema, model } = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
+//Modelo de Niñeras
+
 const babyguardSchema = new Schema({
     name: String,
     surnames: String,
@@ -27,6 +29,7 @@ const babyguardSchema = new Schema({
     }],
 })
 
+//Evito que devuelva la contraseña y algunos elementos más que son innecesarios
 babyguardSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id
@@ -37,6 +40,7 @@ babyguardSchema.set('toJSON', {
     }
 })
 
+//El uniqueValidator evita que haya valores iguales en la base de datos lanzando un error
 babyguardSchema.plugin(uniqueValidator)
 
 const Babyguard = model('Babyguard', babyguardSchema)

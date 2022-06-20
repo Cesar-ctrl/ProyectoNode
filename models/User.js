@@ -2,6 +2,8 @@ const { Schema, model } = require('mongoose')
 const { appConfig } = require('../config')
 const uniqueValidator = require('mongoose-unique-validator')
 
+//Modelo de Usuarios o Clientes
+
 const userSchema = new Schema({
     name: String,
     surnames: String,
@@ -29,10 +31,13 @@ const userSchema = new Schema({
         ref:'Babyguard'
     }]
 })
+// Método con el que intenté inicialmente subir las imagenes
 userSchema.methods,setImgUrl = function setImgUrl (filename){
     const {host, port} = appConfig
     this.imgUrl = `http://localhost:3001/public/${filename}`
 }
+
+//Evito que devuelva la contraseña y algunos elementos más que son innecesarios
 
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {
@@ -42,7 +47,8 @@ userSchema.set('toJSON', {
         delete returnedObject.passwordHash
     }
 })
-
+//El uniqueValidator evita que haya valores iguales en la base de datos lanzando un error
+// En este casi todos los modelos que tienen uniqueValidator lo uso para el correo y el DNI
 userSchema.plugin(uniqueValidator)
 
 const User = model('User', userSchema)
