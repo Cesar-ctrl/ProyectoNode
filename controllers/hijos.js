@@ -61,7 +61,8 @@ hijosRouter.put('/:id', userExtractor, async(request, response, next) => {
     edad: hijo.edad,
     DNI: hijo.DNI,
     alergenos: hijo.alergenos,
-    necesidadesesp: hijo.necesidadesesp
+    necesidadesesp: hijo.necesidadesesp,
+    imgUrl:hijo.imgUrl
   }
 
   await Hijo.findByIdAndUpdate(id, newHijoInfo, { new: true })
