@@ -24,7 +24,7 @@ hijosRouter.get('/:id', userExtractor, async (request, response) =>{
 })
 
 hijosRouter.post('/', userExtractor, async(request, response, next) => {
-    const { name, surnames, edad, DNI, alergenos, necesidadesesp } = request.body
+    const { name, surnames, edad, DNI, alergenos, necesidadesesp, imgUrl } = request.body
     const { userId } = request
     const user = await User.findById(userId)
 
@@ -35,7 +35,8 @@ hijosRouter.post('/', userExtractor, async(request, response, next) => {
         DNI,
         alergenos,
         necesidadesesp,
-        user: user._id
+        user: user._id,
+        imgUrl:imgUrl
     })
     
     try {
