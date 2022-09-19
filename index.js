@@ -24,6 +24,7 @@ const loginguardRouter = require('./controllers/loginguard')
 const hijosRouter = require('./controllers/hijos')
 const babyguardsRouter = require('./controllers/babyguards')
 const messagesRouter = require('./controllers/messages')
+const commentsRouter = require('./controllers/comments')
 
 app.use(cors())
 app.use(express.json())
@@ -97,6 +98,7 @@ app.use('/api/hijos', hijosRouter)
 app.use('/api/loginguards', loginguardRouter)
 app.use('/api/babyguards', babyguardsRouter)
 app.use('/api/messages', messagesRouter)
+app.use('/api/comments', commentsRouter)
 
 
 // Aquí  se llaman a los middlewares de control de errores
@@ -118,7 +120,7 @@ const server = app.listen(PORT, () => {
 // Cambiar origin: "https://babyguard.vercel.app" por origin: "http://localhost:3000"
 const io = socket(server, {
   cors: {
-    origin: "https://babyguard.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   },
 });

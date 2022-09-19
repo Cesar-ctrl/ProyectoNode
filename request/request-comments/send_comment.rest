@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/comments/addcomment
+content-type: application/json
+
+{
+    "from": "62a3c3fd591b478061f6ebce",
+    "to": "62a1df7fa03b4c99de8fd643",
+    "contenido":"Comentario usuario",
+    "valoracion":1
+}
