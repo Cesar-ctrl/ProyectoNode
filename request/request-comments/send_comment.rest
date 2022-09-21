@@ -1,9 +1,10 @@
 POST http://localhost:3001/api/comments/addcomment
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBjYjdmYTQyZWVmMjcwNjdhOTFlNyIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY2Mzc0OTgzMSwiZXhwIjoxNjY0MzU0NjMxfQ.IxrbJEyELuGjTimO1HmcU0HvQZi2us7dJ9SdCxuygZE
 
 {
-    "from": "62a3c3fd591b478061f6ebce",
-    "to": "62a1df7fa03b4c99de8fd643",
-    "contenido":"Comentario usuario",
-    "valoracion":1
+    "from": "63076d7eb5b57609efa9964f",
+    "to": "62aaeddf0512671d470ff8b8",
+    "contenido":"Comentario 3",
+    "valoracion":3
 }

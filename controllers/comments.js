@@ -1,5 +1,6 @@
 const Comments = require("../models/Comment");
 const commentsRouter = require('express').Router()
+const userExtractor = require('../middleware/userExtractor')
 
 //Método Post para recibir el usuario que envia y el que recibe
 //para luego enviar todos los mensajes con esos dos participantes
@@ -35,7 +36,7 @@ commentsRouter.post('/getcomment', async (request, response, next) => {
 })
 
 //Método post para enviar mensajes al igual que recibir tiene un to y from pero a demas tiene el mensaje
-commentsRouter.post('/addcomment', async (request, response, next) => {
+commentsRouter.post('/addcomment', userExtractor, async (request, response, next) => {
   try {
     const { from, to, contenido, valoracion } = request.body;
     const data = await Comments.create({

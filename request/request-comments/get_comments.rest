@@ -2,5 +2,5 @@ POST http://localhost:3001/api/comments/getcomment
 content-type: application/json
 
 {
-    "to": "62a1df7fa03b4c99de8fd643"
+    "to": "62aaeddf0512671d470ff8b8"
 }
