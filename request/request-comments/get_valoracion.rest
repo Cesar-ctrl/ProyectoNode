@@ -1,0 +1,6 @@
+POST http://localhost:3001/api/comments/getval
+content-type: application/json
+
+{
+    "to": "62aaeddf0512671d470ff8b8"
+}

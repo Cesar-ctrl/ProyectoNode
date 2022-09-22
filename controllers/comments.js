@@ -35,6 +35,30 @@ commentsRouter.post('/getcomment', async (request, response, next) => {
   }
 })
 
+commentsRouter.post('/getval', async (request, response, next) => {
+  try {
+    //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
+    const { to } = request.body;
+    
+    //Busca todos los mensajes que tengan el usuario especificado
+    const comments = await Comments.find({
+      users: {
+        $all: [to],
+      },
+    })
+
+    //Devuelve todos los comentarios 
+    const projectedComments = comments.map((comment) => {
+      return {
+        valoracion: comment.valoracion
+      };
+    });
+    response.json(projectedComments);
+  } catch (ex) {
+    next(ex);
+  }
+})
+
 //Método post para enviar mensajes al igual que recibir tiene un to y from pero a demas tiene el mensaje
 commentsRouter.post('/addcomment', userExtractor, async (request, response, next) => {
   try {
