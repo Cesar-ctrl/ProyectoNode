@@ -5,6 +5,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBjYjdmY
 {
     "from": "63076d7eb5b57609efa9964f",
     "to": "62aaeddf0512671d470ff8b8",
-    "contenido":"Comentario 3",
-    "valoracion":3
+    "contenido":"Hola Gonzalo",
+    "valoracion":5
 }
