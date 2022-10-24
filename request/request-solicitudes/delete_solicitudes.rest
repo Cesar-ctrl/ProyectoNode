@@ -1,0 +1,2 @@
+DELETE http://localhost:3001/api/solicitudes/62b05ae948c94eec5903e64b
+content-type: application/json

@@ -30,10 +30,10 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
     }],
-    contrato: [{
+    contrato: {
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
-    }],
+    },
     historialContratos: [{
         type: Schema.Types.ObjectId,
         ref:'Babyguard'

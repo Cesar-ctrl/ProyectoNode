@@ -3,5 +3,6 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBjYjdmYTQyZWVmMjcwNjdhOTFlNyIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY2Mzc0OTgzMSwiZXhwIjoxNjY0MzU0NjMxfQ.IxrbJEyELuGjTimO1HmcU0HvQZi2us7dJ9SdCxuygZE
 
 {
-    "aprobado": true
+    "aprobado": true,
+    "user":"62b05ae948c94eec5903e64b"
 }

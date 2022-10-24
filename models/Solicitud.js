@@ -14,6 +14,13 @@ const solicitudSchema = new Schema({
     acabado:Boolean
 })
 
+solicitudSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id
+        delete returnedObject._v
+    }
+})
+
 const Solicitud = model('Solicitud', solicitudSchema)
 
 module.exports = Solicitud
