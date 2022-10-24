@@ -25,6 +25,7 @@ const hijosRouter = require('./controllers/hijos')
 const babyguardsRouter = require('./controllers/babyguards')
 const messagesRouter = require('./controllers/messages')
 const commentsRouter = require('./controllers/comments')
+const solicitudesRouter = require('./controllers/solicitudes')
 
 app.use(cors())
 app.use(express.json())
@@ -99,6 +100,7 @@ app.use('/api/loginguards', loginguardRouter)
 app.use('/api/babyguards', babyguardsRouter)
 app.use('/api/messages', messagesRouter)
 app.use('/api/comments', commentsRouter)
+app.use('/api/solicitudes', solicitudesRouter)
 
 
 // Aquí  se llaman a los middlewares de control de errores

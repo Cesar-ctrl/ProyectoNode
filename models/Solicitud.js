@@ -10,7 +10,8 @@ const solicitudSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
     },
-    aprobado:Boolean
+    aprobado:Boolean,
+    acabado:Boolean
 })
 
 const Solicitud = model('Solicitud', solicitudSchema)
