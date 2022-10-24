@@ -29,6 +29,14 @@ const userSchema = new Schema({
     chats: [{
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
+    }],
+    contrato: [{
+        type: Schema.Types.ObjectId,
+        ref:'Babyguard'
+    }],
+    historialContratos: [{
+        type: Schema.Types.ObjectId,
+        ref:'Babyguard'
     }]
 })
 // Método con el que intenté inicialmente subir las imagenes
