@@ -25,6 +25,8 @@ solicitudesRouter.get('/:id', async (request, response) => {
 
 
 solicitudesRouter.post('/send', async (request, response) => {
+    //Primero se hace el post para crear las solicitudes, una persona puede mandar solicitudes a mas de una niñera
+    //pero solo puede contratar a una niñera a la vez.
 
     const { user, guard } = request.body;
     const solicitud = new Solicitud({
@@ -36,6 +38,9 @@ solicitudesRouter.post('/send', async (request, response) => {
 })
 
 solicitudesRouter.put('/:id', async (request, response) => {
+    //Las niñeras aceptan o rechazar las solicitudes
+    //pero cuando una niñera acepta una solicitud las demás solicitudes deben invalidarse
+    //para esto si recibe una solicitud aceptada todas las demas se ponen como rechazadas
 
     const { id } = request.params
     const { aprobado, user } = request.body;
@@ -48,7 +53,7 @@ solicitudesRouter.put('/:id', async (request, response) => {
             aprobado:aprobado,
             acabado:false
         }
-        Solicitud.updateMany({ "user":user }, { $set: { aprobado: false } })
+        await Solicitud.updateMany({ "user":user }, { $set: { aprobado: false } })
         Solicitud.findByIdAndUpdate(id, respuesta, { new: true })
         .then(result => {
             if (result){
@@ -76,9 +81,10 @@ solicitudesRouter.put('/:id', async (request, response) => {
 
 
 solicitudesRouter.delete('/:id', async (request, response) => {
-    //Idea, este comando solo se haga cuando alguien y justo antes ha aceptado la solicitud
-    // Despues buscar todos los de una persona que aprobado sea false 
-    //Si vienen en false solo hay que poner el filtro de delete los false
+    //Pero las niñeras no tienen que ver una solicitud aceptada por otra persona
+    //así que se ejecuta este delete despues de una solicitud aceptada.
+    //Aquí borra todas las solicitudes que estan rechazadas.
+    //Y como por defecto se ponen rechazadas todas las solicitudes cuando una se acepta borra las solicitudes
     //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
     const { id } = request.params
     console.log(id)
