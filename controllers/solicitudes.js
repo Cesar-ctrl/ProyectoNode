@@ -23,6 +23,47 @@ solicitudesRouter.get('/:id', async (request, response) => {
 
 })
 
+solicitudesRouter.get('/history/:id', async (request, response) => {
+
+    //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
+    const { id } = request.params
+    //Busca todos los mensajes que tengan el usuario especificado
+    const solicitud = await Solicitud.find({
+        user:id
+    })
+    .then(user => {
+        if (user){
+            return response.json(user)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => {
+        console.log(err)   
+    })
+
+})
+
+solicitudesRouter.post('/solicitado', async (request, response) => {
+
+    //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
+    const { user, guard } = request.body;
+    //Busca todos los mensajes que tengan el usuario especificado
+    const solicitud = await Solicitud.find({
+        user:user,
+        guard:guard
+    })
+    .then(respuesta => {
+        if (respuesta){
+            return response.json(respuesta)
+        } else {
+            return response.json(respuesta)
+        }
+    }).catch(err => {
+        console.log(err)   
+    })
+
+})
+
 
 solicitudesRouter.post('/send', async (request, response) => {
     //Primero se hace el post para crear las solicitudes, una persona puede mandar solicitudes a mas de una niñera
@@ -34,7 +75,15 @@ solicitudesRouter.post('/send', async (request, response) => {
         guard:guard
     })
     const savedSolicitud = await solicitud.save()
-    response.status(201).json(savedSolicitud)
+    .then(result => {
+        if (result){
+            return response.json(result)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => {
+        console.log(err)   
+    })
 })
 
 solicitudesRouter.put('/:id', async (request, response) => {

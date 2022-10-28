@@ -1,2 +1,2 @@
-DELETE http://localhost:3001/api/solicitudes/62b05ae948c94eec5903e64b
+DELETE http://localhost:3001/api/solicitudes/62a0cb7fa42eef27067a91e7
 content-type: application/json

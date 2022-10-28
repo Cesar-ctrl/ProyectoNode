@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/solicitudes/solicitado
+content-type: application/json
+
+{
+    "user": "62b05ae948c94eec5903e64b",
+    "guard": "62aaeddf0512671d470ff8b8"
+}
