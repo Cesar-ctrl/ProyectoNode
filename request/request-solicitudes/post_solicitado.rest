@@ -2,6 +2,6 @@ POST http://localhost:3001/api/solicitudes/solicitado
 content-type: application/json
 
 {
-    "user": "62b05ae948c94eec5903e64b",
+    "user": "62a0cb7fa42eef27067a91e7",
     "guard": "62aaeddf0512671d470ff8b8"
 }
