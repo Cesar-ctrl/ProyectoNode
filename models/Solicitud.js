@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { Schema, model } = require('mongoose')
 const { appConfig } = require('../config')
 

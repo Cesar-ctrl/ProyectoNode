@@ -5,15 +5,21 @@ const { CONSOLE_LEVELS } = require('@sentry/utils')
 
 solicitudesRouter.get('/:id', async (request, response) => {
 
+    console.log(request)
     //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
     const { id } = request.params
     //Busca todos los mensajes que tengan el usuario especificado
     const solicitud = await Solicitud.find({
         guard:id
+    }).populate('user',{
+        name: 1,
+        surnames: 1,
+        imgUrl: 1,
+        historialContratos: 1
     })
-    .then(user => {
-        if (user){
-            return response.json(user)
+    .then(res => {
+        if (res){
+            return response.json(res)
         } else {
             response.status(404).end()
         }
@@ -114,7 +120,7 @@ solicitudesRouter.put('/:id', async (request, response) => {
             console.log(err)   
         })
     }else{
-        Solicitud.findByIdAndUpdate(id, respuesta, { new: true })
+        await Solicitud.findByIdAndUpdate(id, respuesta, { new: true })
         .then(result => {
             if (result){
                 return response.json(result)
