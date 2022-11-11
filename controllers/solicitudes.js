@@ -1,17 +1,16 @@
 const solicitudesRouter = require('express').Router()
 const Solicitud = require('../models/Solicitud')
+const UserModel = require('../models/User')
 const userExtractor = require('../middleware/userExtractor')
 const { CONSOLE_LEVELS } = require('@sentry/utils')
 
 solicitudesRouter.get('/:id', async (request, response) => {
 
-    console.log(request)
     //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
     const { id } = request.params
     //Busca todos los mensajes que tengan el usuario especificado
-    const solicitud = await Solicitud.find({
-        guard:id
-    }).populate('user',{
+    const solicitud = await Solicitud.find({guard:id})
+    .populate('user',{
         name: 1,
         surnames: 1,
         imgUrl: 1,
@@ -34,12 +33,12 @@ solicitudesRouter.get('/history/:id', async (request, response) => {
     //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
     const { id } = request.params
     //Busca todos los mensajes que tengan el usuario especificado
-    const solicitud = await Solicitud.find({
-        user:id
-    })
+    console.log(id)
+    const userio = await UserModel.findById(id)
     .then(user => {
         if (user){
-            return response.json(user)
+            console.log(user)
+            return response.json(user.historialContratos)
         } else {
             response.status(404).end()
         }
@@ -97,28 +96,83 @@ solicitudesRouter.put('/:id', async (request, response) => {
     //pero cuando una niñera acepta una solicitud las demás solicitudes deben invalidarse
     //para esto si recibe una solicitud aceptada todas las demas se ponen como rechazadas
 
+    //esto ya funciona ahora hay que hacer que la solicitud aceptada pase a la nueva pestaña que hay que crear
+
+    
     const { id } = request.params
-    const { aprobado, user } = request.body;
+    const { aprobado, user, guard } = request.body;
     const respuesta = {aprobado:aprobado}
     // Idea Si alguien pone true, despues actualize todas las solicitudes que no sean true
     // y ponerlas en false
-    console.log(aprobado)
+    console.log(user)
     if(aprobado){
-        const respuesta = {
+        const respuesta2 = {
             aprobado:aprobado,
             acabado:false
         }
+        console.log(respuesta2)
         await Solicitud.updateMany({ "user":user }, { $set: { aprobado: false } })
-        Solicitud.findByIdAndUpdate(id, respuesta, { new: true })
         .then(result => {
             if (result){
-                return response.json(result)
+                console.log(result)
+            } 
+        })
+        console.log("Despues updateMany")
+        Solicitud.findByIdAndUpdate(id, respuesta2, { new: true })
+        .then(result => {
+            if (result){
+                //response.json(result)
             } else {
                 response.status(404).end()
             }
         }).catch(err => {
+            console.log("Err")
             console.log(err)   
         })
+        try{
+            var solicutudcont
+            var usercont
+            const newUserInfo = {
+                historialContratos: id
+            }
+            console.log("Despues findByIdAndUpdate " + id)
+            const solicitudfinded = await Solicitud.findById(id)
+            .then(result => {
+                solicutudcont = result
+            })
+            .catch(err => {
+                console.log("err")
+                console.log(err)   
+            })
+            console.log("Despues Solicitud.findById "+ user)
+            const userfinded = await UserModel.findById(user)
+            userfinded.historialContratos = userfinded.historialContratos.concat(newUserInfo.historialContratos)
+            console.log("Despues historialContratos.concat")
+            response.json(userfinded)
+            await userfinded.save() 
+
+            const respuesta = await Solicitud.find({guard:guard, aprobado:false })
+            .populate('user',{
+                name: 1,
+                surnames: 1,
+                imgUrl: 1,
+                historialContratos: 1
+            })
+            .then(res => {
+                if (res){
+                    return response.json(res)
+                } else {
+                    response.status(404).end()
+                }
+            }).catch(err => {
+                console.log(err)   
+            })
+
+        }catch(err){
+            console.log(err)
+        }
+        
+
     }else{
         await Solicitud.findByIdAndUpdate(id, respuesta, { new: true })
         .then(result => {

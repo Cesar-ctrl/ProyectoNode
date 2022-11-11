@@ -36,7 +36,7 @@ const userSchema = new Schema({
     },
     historialContratos: [{
         type: Schema.Types.ObjectId,
-        ref:'Babyguard'
+        ref:'Solicitud'
     }]
 })
 // Método con el que intenté inicialmente subir las imagenes

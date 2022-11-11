@@ -129,7 +129,7 @@ usersRouter.post('/', async(request, response) => {
         passwordHash,
         imgUrl:"1655398811921.jpg"
     })
-    
+    console.log(user)
     const savedUser = await user.save()    
     response.status(201).json(savedUser)
 })
