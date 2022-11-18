@@ -52,6 +52,27 @@ solicitudesRouter.get('/history/:id', async (request, response) => {
 
 })
 
+solicitudesRouter.get('/history/contratos/:id', async (request, response) => {
+
+    //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
+    const { id } = request.params
+    //Busca todos los mensajes que tengan el usuario especificado
+    const solicitud = await Solicitud.find({
+        guard:id,
+        aprobado:true
+    })
+    .then(user => {
+        if (user){
+            return response.json(user)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => {
+        console.log(err)   
+    })
+
+})
+
 solicitudesRouter.post('/solicitado', async (request, response) => {
 
     //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
@@ -59,7 +80,8 @@ solicitudesRouter.post('/solicitado', async (request, response) => {
     //Busca todos los mensajes que tengan el usuario especificado
     const solicitud = await Solicitud.find({
         user:user,
-        guard:guard
+        guard:guard,
+        aprobado:null
     })
     .then(respuesta => {
         if (respuesta){
@@ -81,7 +103,8 @@ solicitudesRouter.post('/send', async (request, response) => {
     const { user, guard } = request.body;
     const solicitud = new Solicitud({
         user:user,
-        guard:guard
+        guard:guard,
+        aprobado:null
     })
     const savedSolicitud = await solicitud.save()
     .then(result => {
@@ -115,10 +138,10 @@ solicitudesRouter.put('/:id', async (request, response) => {
             aprobado:aprobado,
             acabado:false
         }
-        await Solicitud.updateMany({ "user":user }, { $set: { aprobado: false } })
+        await Solicitud.updateMany({ "user":user, aprobado:null }, { $set: { aprobado: false } })
         .then(result => {
             if (result){
-                console.log(result)
+                //console.log(result)
             } 
         })
         Solicitud.findByIdAndUpdate(id, respuesta2, { new: true })
@@ -175,10 +198,6 @@ solicitudesRouter.put('/:id', async (request, response) => {
         }catch(err){
             console.log(err)
         }
-        
-        
-        
-
     }else{
         await Solicitud.findByIdAndUpdate(id, respuesta, { new: true })
         .then(result => {
@@ -191,7 +210,32 @@ solicitudesRouter.put('/:id', async (request, response) => {
             console.log(err)   
         })
     }
-    
+})
+
+solicitudesRouter.put('/acabar/:id', async (request, response) => {
+    const { id } = request.params
+    const { acabado, guard } = request.body;
+    const respuesta = {acabado:acabado}
+
+    await Solicitud.findByIdAndUpdate(id, respuesta, { new: true })
+
+    const responde = await Solicitud.find({guard:guard})
+    .populate('user',{
+        name: 1,
+        surnames: 1,
+        imgUrl: 1,
+        historialContratos: 1
+    })
+    .then(res => {
+        if (res){
+            return response.json(res)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => {
+        console.log(err)   
+    })
+
 })
 
 

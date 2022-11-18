@@ -1,0 +1,2 @@
+GET http://localhost:3001/api/solicitudes/history/contratos/62aaeddf0512671d470ff8b8
+content-type: application/json

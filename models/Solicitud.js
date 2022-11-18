@@ -11,6 +11,12 @@ const solicitudSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Babyguard'
     },
+    horarioinicio: String,
+    horariofin: String,
+    ninios: [{
+        type: Schema.Types.ObjectId,
+        ref:'Hijo'
+    }],
     aprobado:Boolean,
     acabado:Boolean
 })
