@@ -1,8 +1,10 @@
-PUT http://localhost:3001/api/solicitudes/635b954a193a925624c3373d
+PUT http://localhost:3001/api/solicitudes/63720fa9a06267955898838c
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBjYjdmYTQyZWVmMjcwNjdhOTFlNyIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY2Mzc0OTgzMSwiZXhwIjoxNjY0MzU0NjMxfQ.IxrbJEyELuGjTimO1HmcU0HvQZi2us7dJ9SdCxuygZE
 
 {
     "aprobado": false,
-    "user":"62a0cb7fa42eef27067a91e7"
+    "user":"62a0cb7fa42eef27067a91e7",
+    "guard":"62aaeddf0512671d470ff8b8"
+
 }

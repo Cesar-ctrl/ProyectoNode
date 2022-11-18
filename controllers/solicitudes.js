@@ -1,6 +1,7 @@
 const solicitudesRouter = require('express').Router()
 const Solicitud = require('../models/Solicitud')
 const UserModel = require('../models/User')
+const Babyguard = require('../models/Babyguard')
 const userExtractor = require('../middleware/userExtractor')
 const { CONSOLE_LEVELS } = require('@sentry/utils')
 
@@ -33,12 +34,15 @@ solicitudesRouter.get('/history/:id', async (request, response) => {
     //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
     const { id } = request.params
     //Busca todos los mensajes que tengan el usuario especificado
-    console.log(id)
-    const userio = await UserModel.findById(id)
+    const userio = await UserModel.findById(id).populate('historialContratos',{
+        id: 1,
+        user: 1,
+        guard: 1,
+        aprobado:1
+    })
     .then(user => {
         if (user){
-            console.log(user)
-            return response.json(user.historialContratos)
+            return response.json(user)
         } else {
             response.status(404).end()
         }
@@ -97,6 +101,7 @@ solicitudesRouter.put('/:id', async (request, response) => {
     //para esto si recibe una solicitud aceptada todas las demas se ponen como rechazadas
 
     //esto ya funciona ahora hay que hacer que la solicitud aceptada pase a la nueva pestaña que hay que crear
+    //Intentar crear notificaciones locales, que avisen a un usuario si se ha aceptado solicitud y notificaciones
 
     
     const { id } = request.params
@@ -110,14 +115,12 @@ solicitudesRouter.put('/:id', async (request, response) => {
             aprobado:aprobado,
             acabado:false
         }
-        console.log(respuesta2)
         await Solicitud.updateMany({ "user":user }, { $set: { aprobado: false } })
         .then(result => {
             if (result){
                 console.log(result)
             } 
         })
-        console.log("Despues updateMany")
         Solicitud.findByIdAndUpdate(id, respuesta2, { new: true })
         .then(result => {
             if (result){
@@ -129,29 +132,30 @@ solicitudesRouter.put('/:id', async (request, response) => {
             console.log("Err")
             console.log(err)   
         })
+        const newGuardInfo = {
+            disponible: true
+        }
+        await Babyguard.findByIdAndUpdate(guard, newGuardInfo, { new: true })
         try{
             var solicutudcont
             var usercont
-            const newUserInfo = {
-                historialContratos: id
-            }
-            console.log("Despues findByIdAndUpdate " + id)
             const solicitudfinded = await Solicitud.findById(id)
             .then(result => {
+                console.log(result)
                 solicutudcont = result
             })
             .catch(err => {
                 console.log("err")
                 console.log(err)   
             })
-            console.log("Despues Solicitud.findById "+ user)
+            const newUserInfo = {
+                historialContratos: solicutudcont
+            }
             const userfinded = await UserModel.findById(user)
             userfinded.historialContratos = userfinded.historialContratos.concat(newUserInfo.historialContratos)
-            console.log("Despues historialContratos.concat")
-            response.json(userfinded)
             await userfinded.save() 
 
-            const respuesta = await Solicitud.find({guard:guard, aprobado:false })
+            const respuesta = await Solicitud.find({guard:guard})
             .populate('user',{
                 name: 1,
                 surnames: 1,
@@ -171,6 +175,8 @@ solicitudesRouter.put('/:id', async (request, response) => {
         }catch(err){
             console.log(err)
         }
+        
+        
         
 
     }else{
@@ -196,7 +202,6 @@ solicitudesRouter.delete('/:id', async (request, response) => {
     //Y como por defecto se ponen rechazadas todas las solicitudes cuando una se acepta borra las solicitudes
     //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
     const { id } = request.params
-    console.log(id)
     //Busca todos los mensajes que tengan el usuario especificado
     const solicitud = await Solicitud.deleteMany({
         user:id,
@@ -205,7 +210,6 @@ solicitudesRouter.delete('/:id', async (request, response) => {
     .then(respuesta => {
         if (respuesta){
             return response.json(respuesta)
-            console.log(resp.id)
             //Solicitud.findById(respuesta.id)
         } else {
             response.status(404).end()
