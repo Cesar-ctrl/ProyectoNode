@@ -48,7 +48,7 @@ babyguardsRouter.get('/chat/:id', async (request, response) =>{
 //Método post para crear un guard
 babyguardsRouter.post('/', async(request, response) => {
     const { body } = request
-    const { name, surnames, DNI, phone, email, dias, horarioinicio, horariofin, disponible, password } = body
+    const { name, surnames, DNI, phone, email, dias, horarioinicio, horariofin, disponible, password, cp } = body
 
     const saltRounds = 10 
     const passwordHash = await bcrypt.hash(password, saltRounds)
@@ -64,7 +64,8 @@ babyguardsRouter.post('/', async(request, response) => {
         horariofin,
         disponible,
         imgUrl:"1655398811921.jpg",
-        passwordHash
+        passwordHash,
+        cp
     })
     const savedBabyguard = await newbabyguard.save() 
     response.json(savedBabyguard)
@@ -117,7 +118,8 @@ babyguardsRouter.put('/:id', async (request, response, next) => {
     horarioinicio: guard.horarioinicio,
     horariofin: guard.horariofin,
     descripcion: guard.descripcion,
-    imgUrl:guard.imgUrl
+    imgUrl:guard.imgUrl,
+    cp:guard.cp
   }
   
   Babyguard.findByIdAndUpdate(id, newGuardInfo, { new: true })

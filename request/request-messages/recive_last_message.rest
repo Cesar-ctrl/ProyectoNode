@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/messages/getlastmsg
+content-type: application/json
+
+{
+    "from": "62aaeddf0512671d470ff8b8",
+    "to": "62a0cb7fa42eef27067a91e7"
+}

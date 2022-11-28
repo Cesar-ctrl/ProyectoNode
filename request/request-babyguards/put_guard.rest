@@ -1,4 +1,4 @@
-PUT http://localhost:3001/api/babyguards/62aaeddf0512671d470ff8b8
+PUT http://localhost:3001/api/babyguards/62b2f3154d2112a74fdca4eb
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWFlZGRmMDUxMjY3MWQ0NzBmZjhiOCIsImVtYWlsIjoiYW1hZG9jZXNhcjAyQGdtYWlsLmNvbSIsImlhdCI6MTY1NTM3NTYzMywiZXhwIjoxNjU1OTgwNDMzfQ.A04ixg1aK7QbFzfKFz1Z4b8oHh7PZOPRsOUNy7V3emE
 
@@ -8,5 +8,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWFlZGRmM
     "horarioinicio": "09:00",
     "name": "CesarCambio",
     "phone": "987654321",
-    "surnames": "AmadoA"
+    "surnames": "AmadoA",
+    "cp":11402
 }

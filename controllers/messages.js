@@ -28,6 +28,33 @@ messagesRouter.post('/getmsg', async (request, response, next) => {
     next(ex);
   }
 })
+messagesRouter.post('/getlastmsg', async (request, response, next) => {
+  try {
+    //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
+    const { from, to } = request.body;
+    
+    //Busca todos los mensajes que tengan el usuario especificado
+    const messages = await Messages.find({
+      users: {
+        $all: [ to],
+      },
+    }).sort({ updatedAt: 1 });
+
+
+    //Devuelve todos los menajes 
+    console.log(messages[messages.length -1])
+    const projectedMessages = messages[messages.length -1]
+    response.json(projectedMessages);
+      return {
+        fromSelf: messages[messages.length -1].sender.toString() === from,
+        message: messages[messages.length -1].message.text,
+      };
+    
+    
+  } catch (ex) {
+    next(ex);
+  }
+})
 
 //Método post para enviar mensajes al igual que recibir tiene un to y from pero a demas tiene el mensaje
 messagesRouter.post('/addmsg', async (request, response, next) => {

@@ -27,6 +27,7 @@ const babyguardSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'User'
     }],
+    cp:Schema.Types.Number
 })
 
 //Evito que devuelva la contraseña y algunos elementos más que son innecesarios
