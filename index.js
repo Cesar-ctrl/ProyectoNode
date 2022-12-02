@@ -122,7 +122,7 @@ const server = app.listen(PORT, () => {
 // Cambiar origin: "https://babyguard.vercel.app" por origin: "http://localhost:3000"
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://babyguard.vercel.app",
     credentials: true,
   },
 });

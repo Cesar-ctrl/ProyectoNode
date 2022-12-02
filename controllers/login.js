@@ -38,10 +38,12 @@ loginRouter.post('/', async (request, response) =>{
         }
       )
     //Envia la respuesta
+    console.log(user)
     response.send({
         id: user._id,
         name: user.name,
         email: user.email,
+        hijos: user.hijos,
         token,
         guards: user.guards
     })
