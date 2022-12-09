@@ -46,6 +46,42 @@ commentsRouter.post('/getval', async (request, response, next) => {
         $all: [to],
       },
     })
+    console.log(comments)
+    var total = 0
+    var lengt = 0
+
+    //Devuelve todos los comentarios 
+    const projectedComments = comments.map((comment) => {
+      total += comment.valoracion
+      //return {
+      //  valoracion: comment.valoracion
+      //};
+    });
+    console.log(total)
+    lengt = comments.length
+    var resultado = Math.round(total/lengt*10)/10
+    console.log(resultado)
+    response.json({total: resultado});
+    return {
+      total: resultado
+    }
+    
+  } catch (ex) {
+    next(ex);
+  }
+})
+
+commentsRouter.post('/getvalcomments', async (request, response, next) => {
+  try {
+    //from y to son o un usuario y un guard No se pueden comunicar entre usuarios ni entre guards
+    const { to } = request.body;
+    
+    //Busca todos los mensajes que tengan el usuario especificado
+    const comments = await Comments.find({
+      users: {
+        $all: [to],
+      },
+    })
 
     //Devuelve todos los comentarios 
     const projectedComments = comments.map((comment) => {
