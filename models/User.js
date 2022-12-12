@@ -42,7 +42,7 @@ const userSchema = new Schema({
 // Método con el que intenté inicialmente subir las imagenes
 userSchema.methods,setImgUrl = function setImgUrl (filename){
     const {host, port} = appConfig
-    this.imgUrl = `http://localhost:3001/public/${filename}`
+    this.imgUrl = `https://babyguard.vercel.app/public/${filename}`
 }
 
 //Evito que devuelva la contraseña y algunos elementos más que son innecesarios
