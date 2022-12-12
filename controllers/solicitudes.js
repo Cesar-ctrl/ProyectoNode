@@ -100,10 +100,16 @@ solicitudesRouter.post('/send', async (request, response) => {
     //Primero se hace el post para crear las solicitudes, una persona puede mandar solicitudes a mas de una niñera
     //pero solo puede contratar a una niñera a la vez.
 
-    const { user, guard } = request.body;
+    const { user, guard, horarioinicio, horariofin, colegio, calle, institucion, ninios } = request.body;
     const solicitud = new Solicitud({
         user:user,
         guard:guard,
+        horarioinicio:horarioinicio, 
+        horariofin:horariofin, 
+        colegio:colegio, 
+        calle:calle, 
+        institucion:institucion, 
+        ninios:ninios,
         aprobado:null
     })
     const savedSolicitud = await solicitud.save()

@@ -18,7 +18,10 @@ const solicitudSchema = new Schema({
         ref:'Hijo'
     }],
     aprobado:Boolean,
-    acabado:Boolean
+    acabado:Boolean,
+    colegio:Boolean,
+    calle: String,
+    institucion: String
 })
 
 solicitudSchema.set('toJSON', {
